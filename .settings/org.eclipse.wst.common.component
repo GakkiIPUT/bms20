@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="bmsweb10j_takagaki">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <property name="context-root" value="bmsweb10j_takagaki"/>
+        <property name="java-output-path" value="/bmsweb10j_takagaki/build/classes"/>
+    </wb-module>
+</project-modules>

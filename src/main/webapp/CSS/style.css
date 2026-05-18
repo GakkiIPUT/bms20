@@ -1,0 +1,135 @@
+@charset "UTF-8";
+/*
+ プロジェクト名：書籍管理システムWeb版Ver2.0
+ プログラム名：style.css
+ プログラムの説明：システム全体の共通デザイン・レイアウトを制御するスタイルシート。
+ 作成日：2026年5月
+ 作成者：髙垣湧侑翔
+*/
+
+/* 全体の基本フォントと背景の設定 */
+body {
+    font-family: Arial, "ヒラギノ角ゴ Pro W3", "モダンゴシック", sans-serif;
+    background-color: #FAFAFA;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 共通リンクのスタイル */
+a {
+    color: #1A0DAB;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 共通ヘッダー（header.jsp用） */
+header h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+/* 画面上部のメニューリンク等のナビゲーション配置用 */
+.nav-box {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.nav-links {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-links a {
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+/* ユーザー情報表示エリア（userInfo.jsp用） */
+.user-info-box {
+    margin-top: 10px;
+    margin-right: 40px;
+    font-size: 14px;
+}
+
+.user-info-table {
+    border: none;
+    margin-bottom: 10px;
+}
+
+.user-info-table td {
+    padding: 2px 5px;
+    border: none;
+}
+
+/* 書籍データ表示用メインテーブルの共通スタイル */
+table {
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+}
+
+table th, table td {
+    padding: 8px 12px;
+    border: 1px solid #333333;
+}
+
+/* 画面設計書指定：テーブルヘッダーの青背景 */
+th.header-blue, td.label-blue, .bg-blue {
+    background-color: #5679E7 ;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 画面設計書指定：変更画面などの変更前情報の水色背景 */
+td.info-cyan, .bg-cyan {
+    background-color: #66E4DD;
+    color: #000000;
+}
+
+/* 画面設計書指定：一覧画面の検索窓等のグレー枠線 */
+input[type="text"].border-gray, input[type="password"].border-gray {
+    border: 1px solid #8E8E8E;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+/* 共通ボタン（SUBMIT等）の立体感と丸み */
+input[type="submit"], button {
+    background-color: #FFFFFF;
+    border: 1px solid #767676;
+    border-radius: 5px;
+    padding: 4px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #F0F0F0;
+    border-color: #333333;
+}
+
+/* 共通フッター（footer.jsp用）の位置固定 */
+footer {
+    position: fixed;
+    bottom: 60px;
+    width: 100%;
+    background-color: #FAFAFA;
+}
+
+footer p {
+    margin-left: 20px;
+    font-size: 18px;
+	color: #000000;
+}
