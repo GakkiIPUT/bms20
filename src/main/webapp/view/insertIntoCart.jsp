@@ -1,3 +1,11 @@
+<%--
+プロジェクト名：書籍管理システムWeb版Ver2.0
+ プログラム名：insertIntoCart.jsp
+ プログラムの説明：書籍をカートに追加し、確認画面を表示する。
+ 作成日：2026年5月18日
+ 作成者：髙垣湧侑翔
+  --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="bean.Book, util.MyFormat" %>
 <%
@@ -12,8 +20,8 @@
 </head>
 <body>
     <%@ include file="/common/header.jsp" %>
-    <div style="text-align: center;">
-        <div style="float: left; margin-left: 40px;">
+    <div class="page-center">
+        <div class="links-section">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
             <a href="<%= request.getContextPath() %>/list">[書籍一覧]</a>
         </div>
@@ -23,24 +31,24 @@
     
     <p align="center">下記の書籍をカートに追加しました。</p>
     
-    <table align="center" border="1" style="width: 40%; border-collapse: collapse;">
+    <table align="center" border="1" class="form-table-40">
         <tr>
-            <td style="background-color: #5679E7;">ISBN</td>
+            <td class="header-blue">ISBN</td>
             <td><%= book.getIsbn() %></td>
         </tr>
         <tr>
-            <td style="background-color: #5679E7;">TITLE</td>
+            <td class="header-blue">TITLE</td>
             <td><%= book.getTitle() %></td>
         </tr>
         <tr>
-            <td style="background-color: #5679E7;">価格</td>
+            <td class="header-blue">価格</td>
             <td><%= mf.moneyFormat(book.getPrice()) %></td>
         </tr>
     </table>
     
-    <div align="center" style="margin-top: 20px;">
+    <div align="center" class="form-padding-top">
         <form action="<%= request.getContextPath() %>/showCart">
-            <input type="submit" value="カート確認" style="border-radius: 5px;">
+            <input type="submit" value="カート確認">
         </form>
     </div>
     

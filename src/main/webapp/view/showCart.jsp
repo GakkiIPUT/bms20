@@ -1,3 +1,11 @@
+<%--
+プロジェクト名：書籍管理システムWeb版Ver2.0
+ プログラム名：showCart.jsp
+ プログラムの説明：カート内容を表示し、購入手続き、商品削除等ができる画面。
+ 作成日：2026年5月18日
+ 作成者：髙垣湧侑翔
+  --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, bean.Book, util.MyFormat" %>
 <%
@@ -14,8 +22,8 @@
 <body>
     <%@ include file="/common/header.jsp" %>
     
-    <div style="text-align: center;">
-        <div style="float: left; margin-left: 40px;">
+    <div class="page-center">
+        <div class="links-section">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
             <a href="<%= request.getContextPath() %>/list">[書籍一覧]</a>
         </div>
@@ -23,8 +31,8 @@
     </div>
     <hr align="center" size="2" color="black" width="100%">
     
-    <table align="center" border="1" style="width: 60%; border-collapse: collapse;">
-        <tr style="background-color: #5679E7;">
+    <table align="center" border="1" class="form-table-60">
+        <tr class="table-header-row">
             <th>ISBN</th>
             <th>TITLE</th>
             <th>価格</th>
@@ -54,15 +62,15 @@
         </tr>
         <% } %>
         <tr>
-            <td colspan="2" align="center" style="background-color: #5679E7;">合計</td>
+            <td colspan="2" align="center" class="header-blue">合計</td>
             <td align="right"><%= mf.moneyFormat(total) %></td>
             <td></td>
         </tr>
     </table>
     
-    <div align="center" style="margin-top: 20px;">
+    <div align="center" class="form-padding-top">
         <form action="<%= request.getContextPath() %>/buyConfirm" method="get">
-            <input type="submit" value="購入" style="border-radius: 5px;" <%= list == null || list.size() == 0 ? "disabled" : "" %>>
+            <input type="submit" value="購入" <%= list == null || list.size() == 0 ? "disabled" : "" %>>
         </form>
     </div>
     

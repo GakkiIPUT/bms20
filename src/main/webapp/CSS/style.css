@@ -133,3 +133,140 @@ footer p {
     font-size: 18px;
 	color: #000000;
 }
+
+/* エラーページのスタイル */
+.error-title {
+    color: red;
+    text-align: center;
+}
+
+.error-message {
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ページのセンタリングスタイル */
+.page-center {
+    text-align: center;
+}
+
+.nav-header {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    padding: 0px;
+}
+
+.nav-header-links {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-header-title {
+    text-align: center;
+}
+
+/* フォーム関連のスタイル */
+.form-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-inline {
+    display: inline;
+    margin: 0;
+}
+
+.form-table {
+    width: 50%;
+    table-layout: fixed;
+}
+
+.form-table-30 {
+    width: 30%;
+    table-layout: fixed;
+}
+
+.form-table-40 {
+    width: 40%;
+    table-layout: fixed;
+}
+
+.form-table-60 {
+    width: 60%;
+    table-layout: fixed;
+}
+
+.form-table-80 {
+    width: 80%;
+    table-layout: fixed;
+}
+
+.form-row-header {
+    background-color: #5679E7;
+    color: #000000;
+    width: 30%;
+    text-align: center;
+}
+
+.form-row-header-full {
+    background-color: #5679E7;
+    color: #000000;
+    text-align: center;
+}
+
+.form-row-info {
+    background-color: #66E4DD;
+    color: #000000;
+}
+
+.form-input-full {
+    width: 90%;
+}
+
+.form-padding-top {
+    padding-top: 15px;
+}
+
+/* テーブル関連のスタイル */
+.table-centered {
+    align: center;
+    border: 1px solid #333333;
+    width: 50%;
+    border-collapse: collapse;
+}
+
+.table-header-row {
+    background-color: #5679E7;
+}
+
+.input-text-border-gray {
+    border-color: #8E8E8E;
+}
+
+/* リンク関連 */
+.links-section {
+    margin-left: 40px;
+    float: left;
+}
+
+.links-section-clear {
+    clear: both;
+}
+
+/* テーブルヘッダー幅設定 */
+.table-header-width-10 {
+    width: 10%;
+}
+
+.table-header-width-30 {
+    width: 30%;
+}
+
+.table-header-width-5 {
+    width: 5%;
+}

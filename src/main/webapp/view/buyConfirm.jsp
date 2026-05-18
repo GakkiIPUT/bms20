@@ -1,3 +1,11 @@
+<%--
+プロジェクト名：書籍管理システムWeb版Ver2.0
+ プログラム名：buyConfirm.jsp
+ プログラムの説明：購入確認画面。購入した書籍の確認情報を表示する。
+ 作成日：2026年5月18日
+ 作成者：髙垣湧侑翔
+  --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, bean.Book, util.MyFormat" %>
 <%
@@ -14,8 +22,8 @@
 <body>
     <%@ include file="/common/header.jsp" %>
     
-    <div style="text-align: center;">
-        <div style="float: left; margin-left: 40px;">
+    <div class="page-center">
+        <div class="links-section">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
             <a href="<%= request.getContextPath() %>/list">[書籍一覧]</a>
         </div>
@@ -25,8 +33,8 @@
     
     <p align="center">下記の商品を購入しました。<br>ご利用ありがとうございました。</p>
     
-    <table align="center" border="1" style="width: 50%; border-collapse: collapse;">
-        <tr style="background-color: #5679E7;">
+    <table align="center" border="1" class="form-table">
+        <tr class="table-header-row">
             <th>ISBN</th>
             <th>TITLE</th>
             <th>価格</th>
@@ -46,7 +54,7 @@
         } 
         %>
         <tr>
-            <td colspan="2" align="center" style="background-color: #5679E7;">合計</td>
+            <td colspan="2" align="center" class="header-blue">合計</td>
             <td align="right"><%= mf.moneyFormat(total) %></td>
         </tr>
     </table>

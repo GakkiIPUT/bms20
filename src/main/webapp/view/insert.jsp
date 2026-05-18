@@ -1,8 +1,8 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：insert.jsp
  プログラムの説明：書籍を新規登録するための入力画面。
- 作成日：2026年5月12日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -14,40 +14,34 @@
 <body>
 	<%@ include file="/common/header.jsp"%>
 
-	<div
-		style="position: relative; text-align: center; width: 100%; padding: 0px;">
-		<div
-			style="position: absolute; left: 40px; top: 50%; transform: translateY(-50%);">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp"style="margin-right: 20px;">[メニュー]</a> 
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a> 
 			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
-		<div>
+		<div class="nav-header-title">
 			<h2>書籍登録</h2>
-
 		</div>
 	</div>
 
 	<hr align="center" size="2" color="black" width="100%">
 	<form action="<%=request.getContextPath()%>/insert" method="get">
-		<table align="center" style="width: 50%; table-layout: fixed;">
+		<table align="center" class="form-table">
 			<tr>
-				<td
-					style="background-color: #5679E7; color: #000000; width: 30%; text-align: center;">ISBN</td>
-				<td><input type="text" name="isbn" style="width: 90%;"></td>
+				<td class="form-row-header">ISBN</td>
+				<td><input type="text" name="isbn" class="form-input-full"></td>
 			</tr>
 			<tr>
-				<td
-					style="background-color: #5679E7; color: #000000; text-align: center;">TITLE</td>
-				<td><input type="text" name="title" style="width: 90%;"></td>
+				<td class="form-row-header-full">TITLE</td>
+				<td><input type="text" name="title" class="form-input-full"></td>
 			</tr>
 			<tr>
-				<td
-					style="background-color: #5679E7; color: #000000; text-align: center;">価格</td>
-				<td><input type="text" name="price" style="width: 90%;"></td>
+				<td class="form-row-header-full">価格</td>
+				<td><input type="text" name="price" class="form-input-full"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center" style="padding-top: 15px;"><input
-					type="submit" value="登録" style="background-color:#FFFFFF ; border-radius: 5px"></td>
+				<td colspan="2" align="center" class="form-padding-top"><input
+					type="submit" value="登録"></td>
 					
 			</tr>
 		</table>

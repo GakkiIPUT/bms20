@@ -2,7 +2,7 @@
  プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：userInfo.jsp
  プログラムの説明：ログインユーザー情報の表示およびセッション切れチェックを行う共通コンポーネント。
- 作成日：2026年5月
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -45,5 +45,5 @@
             <td><%= authorityStr %></td>
         </tr>
     </table>
-    <div style="clear: both;"></div>
+    <div class="links-section-clear"></div>
 </div>

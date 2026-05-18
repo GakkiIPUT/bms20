@@ -1,8 +1,8 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：menu.jsp
  プログラムの説明：各機能(主に一覧と登録)への導線となるメニュー画面。
- 作成日：2026年5月12日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -22,13 +22,11 @@ if (user == null) {
 }
 %>
 
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>メニュー</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/style.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
 </head>
 <body>
     <%@ include file="/common/header.jsp" %>

@@ -1,8 +1,8 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：list.jsp
  プログラムの説明：データベースから取得した書籍一覧を表示する画面。
- 作成日：2026年5月12日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -18,44 +18,40 @@ MyFormat format = new MyFormat();
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
-	<div
-		style="position: relative; text-align: center; width: 100%; padding: 0px;">
-		<div
-			style="position: absolute; left: 40px; top: 50%; transform: translateY(-50%);">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp" style="margin-right: 20px;">[メニュー]</a>
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a>
 			<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
 		</div>
-		<div>
+		<div class="nav-header-title">
 			<h2>書籍一覧</h2>
-
 		</div>
 	</div>
 
 	<hr align="center" size="2" color="black" width="100%">
 
-	<div
-		style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+	<div class="form-layout">
 
 		<form action="<%=request.getContextPath()%>/search" method="get"
-			style="margin: 0;">
-			ISBN:<input type="text" name="isbn" style="border-color:#8E8E8E"> 
-			TITLE:<input type="text"name="title" style="border-color:#8E8E8E"> 
-			価格:<input type="text" name="price" style="border-color:#8E8E8E"> 
-			<input type="submit" value="検索" style="background-color:#FFFFFF ; border-radius: 5px">
+			class="form-inline">
+			ISBN:<input type="text" name="isbn" class="input-text-border-gray"> 
+			TITLE:<input type="text"name="title" class="input-text-border-gray"> 
+			価格:<input type="text" name="price" class="input-text-border-gray"> 
+			<input type="submit" value="検索">
 		</form>
 
 		<form action="<%=request.getContextPath()%>/list" method="get"
-			style="margin: 0;">
-			<input type="submit" value="全件表示" style="background-color:#FFFFFF ; border-radius: 5px">
+			class="form-inline">
+			<input type="submit" value="全件表示">
 		</form>
 
 	</div>
-	<table align="center" style="width: 80%; table-layout: fixed;">
+	<table align="center" class="form-table-80">
 		<tr>
-			<th style="background-color: #5679E7; color: #000000">ISBN</th>
-			<th style="background-color: #5679E7; color: #000000">TITLE</th>
-			<th style="background-color: #5679E7; color: #000000">価格</th>
-			<th style="background-color: #5679E7; color: #000000">変更/削除/カートに入れる</th>
+			<th class="header-blue">ISBN</th>
+			<th class="header-blue">TITLE</th>
+			<th class="header-blue">価格</th>
+			<th class="header-blue">変更/削除/カートに入れる</th>
 		</tr>
 		<%
 		if (list != null) {

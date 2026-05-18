@@ -1,8 +1,8 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：error.jsp
  プログラムの説明：システム内で発生したエラーメッセージを表示し、適切な画面へ誘導する。
- 作成日：2026年5月12日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -16,9 +16,9 @@
 <body>
     <%@ include file="/common/header.jsp" %>
     
-    <h2 align="center" style="color: red;">●●エラー●●</h2>
+    <h2 align="center" class="error-title">●●エラー●●</h2>
     <br>
-    <p align="center" style="font-weight: bold;"><%= error %></p>
+    <p align="center" class="error-message"><%= error %></p>
     <br>
     
     <p align="center">

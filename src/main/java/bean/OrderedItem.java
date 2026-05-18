@@ -46,7 +46,7 @@ public class OrderedItem {
 	 * titleのゲッターメソッド
 	 * @returnフィールド変数titleで管理された値を返す
 	 */
-	public String getIsbn() {
+	public String getTitle() {
 		return title;
 	}
 

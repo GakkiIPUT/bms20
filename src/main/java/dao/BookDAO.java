@@ -272,8 +272,8 @@ public class BookDAO {
 		PreparedStatement pstmt = null;// 戻り値として返すためのArrayListを初期化
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		String sql = "SELECT isbn, title, price FROM bookinfo"
-				+ " WHERE isbn LIKE '% ? %' AND title LIKE '% ? %'"
-				+ " AND price LIKE '% ? %'";
+				+ " WHERE isbn LIKE % ? % AND title LIKE % ? %"
+				+ " AND price LIKE % ? %";
 		try {
 			// DB接続を取得
 			con = getConnection();

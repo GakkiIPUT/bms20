@@ -1,8 +1,8 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver2.0
  プログラム名：detail.jsp
  プログラムの説明：書籍の1件詳細情報を表示する画面。
- 作成日：2026年5月12日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
@@ -19,38 +19,33 @@ MyFormat format = new MyFormat();
 <body>
 	<%@ include file="/common/header.jsp"%>
 
-	<div
-		style="position: relative; text-align: center; width: 100%; padding: 0px;">
-		<div
-			style="position: absolute; left: 40px; top: 50%; transform: translateY(-50%);">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp"style="margin-right: 20px;">[メニュー]</a>
-			<a href="<%=request.getContextPath()%>/view/insert.jsp"style="margin-right: 20px;">[書籍登録]</a>
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a>
+			<a href="<%=request.getContextPath()%>/view/insert.jsp" class="nav-links">[書籍登録]</a>
 			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
-
-
 		</div>
-		<div>
+		<div class="nav-header-title">
 			<h2>書籍詳細情報</h2>
-
 		</div>
 	</div>
 	<hr align="center" size="2" color="black" width="100%">
 	<br>
 
-	<table align="center" style="width: 30%; table-layout: fixed;">
+	<table align="center" class="form-table-30">
 		<tr>
 			<td colspan="2" align="center">
 				<form action="<%=request.getContextPath()%>/detail" method="get"
-					style="display: inline;">
+					class="form-inline">
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
 					<input type="hidden" name="cmd" value="update"> <input
-						type="submit" value="変更" style="background-color:#FFFFFF ; border-radius: 5px">
+						type="submit" value="変更">
 				</form>
 				<a>&emsp;&emsp;</a>
 				<form action="<%=request.getContextPath()%>/delete" method="get"
-					style="display: inline;">
+					class="form-inline">
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
-					<input type="submit" value="削除" style="background-color:#FFFFFF ; border-radius: 5px">
+					<input type="submit" value="削除">
 				</form>
 			</td>
 		</tr>
@@ -60,16 +55,16 @@ MyFormat format = new MyFormat();
 
 		</tr>
 		<tr>
-			<td style="background-color: #5679E7; color: #000000">ISBN</td>
-			<td style="background-color: #66E4DD; color: #000000"><%=book.getIsbn()%></td>
+			<td class="form-row-header-full">ISBN</td>
+			<td class="form-row-info"><%=book.getIsbn()%></td>
 		</tr>
 		<tr>
-			<td style="background-color: #5679E7; color: #000000">TITLE</td>
-			<td style="background-color: #66E4DD; color: #000000"><%=book.getTitle()%></td>
+			<td class="form-row-header-full">TITLE</td>
+			<td class="form-row-info"><%=book.getTitle()%></td>
 		</tr>
 		<tr>
-			<td style="background-color: #5679E7; color: #000000">価格</td>
-			<td style="background-color: #66E4DD; color: #000000"><%=format.moneyFormat(book.getPrice())%></td>
+			<td class="form-row-header-full">価格</td>
+			<td class="form-row-info"><%=format.moneyFormat(book.getPrice())%></td>
 		</tr>
 
 	</table>
