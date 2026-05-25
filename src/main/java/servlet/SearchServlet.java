@@ -1,8 +1,8 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver1.0
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
  * プログラム名：SearchServlet.java
  * プログラムの説明：書籍情報の検索処理を制御するサーブレットクラス。
- * 作成日：2026年5月12日
+ * 作成日：2026年5月20日
  * 作成者：髙垣湧侑翔
 */
 
@@ -30,6 +30,11 @@ public class SearchServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
+		// 制御用の変数を初期化
+		String path = "/view/list.jsp";
+		String error = null;
+		String cmd = "menu";
+
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String price = request.getParameter("price");
@@ -37,14 +42,17 @@ public class SearchServlet extends HttpServlet {
 		try {
 			BookDAO dao = new BookDAO();
 			ArrayList<Book> list = dao.search(isbn, title, price);
-
 			request.setAttribute("book_list", list);
-			request.getRequestDispatcher("/view/list.jsp").forward(request, response);
 
 		} catch (IllegalStateException e) {
-			request.setAttribute("error", "DB接続エラーの為、一覧表示は行えませんでした。");
-			request.setAttribute("cmd", "logout");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			error = "DB接続エラーの為、一覧表示は行えませんでした。";
+			path = "/view/error.jsp";
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 }

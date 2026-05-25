@@ -1,8 +1,8 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver1.0
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
  * プログラム名：DeleteServlet.java
  * プログラムの説明：書籍情報の削除処理を制御するサーブレットクラス。
- * 作成日：2026年5月12日
+ * 作成日：2026年5月20日
  * 作成者：髙垣湧侑翔
 */
 
@@ -19,7 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import dao.BookDAO;
 
 /**
- * 書籍情報の削除処理を制御するサーブレットクラスです。
+ * 指定されたISBNの書籍を削除します。
+ * 対象の存在確認を行い、存在すれば削除して一覧へ、
+ * 存在しなければエラーページへフォワードします。
  */
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
@@ -30,23 +32,34 @@ public class DeleteServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String isbn = request.getParameter("isbn");
 
+		// 制御用の変数を初期化
+		String path = "/list";
+		String error = null;
+		String cmd = "list";
+
 		try {
 			BookDAO dao = new BookDAO();
 
 			if (dao.selectByIsbn(isbn).getIsbn() == null) {
-				request.setAttribute("error", "削除対象の書籍が存在しない為、書籍削除処理は行えませんでした。");
-				request.setAttribute("cmd", "list");
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				path = "/view/error.jsp";
+				error = "削除対象の書籍が存在しない為、書籍削除処理は行えませんでした。";
+				cmd = "list";
 				return;
 			}
 
 			dao.delete(isbn);
-			request.getRequestDispatcher("/list").forward(request, response);
 
 		} catch (IllegalStateException e) {
-			request.setAttribute("error", "DB接続エラーの為、書籍削除処理は行えませんでした。");
-			request.setAttribute("cmd", "menu");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			path = "/view/error.jsp";
+			error = "DB接続エラーの為、書籍削除処理は行えませんでした。";
+			cmd = "menu";
+			return;
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 }

@@ -1,3 +1,10 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プログラム名：OrderDAO.java
+ * プログラムの説明：orderinfo購入データを新規登録するSQLを担当する。
+ * 作成日：2026年5月20日
+ * 作成者：髙垣湧侑翔
+*/
 package dao;
 
 import java.sql.Connection;

@@ -12,15 +12,18 @@
 ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
 MyFormat format = new MyFormat();
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <title>書籍一覧</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
+
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a>
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
 			<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
 		</div>
 		<div class="nav-header-title">
@@ -64,9 +67,9 @@ MyFormat format = new MyFormat();
 			<td><%=format.moneyFormat(b.getPrice())%></td>
 			<td><a
 				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
-				<a >&emsp;&emsp;</a>
+				<b >&emsp;&emsp;</b>
 				<a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
-				<a >&emsp;&emsp;</a>
+				<b >&emsp;&emsp;</b>
 				<a href="<%=request.getContextPath()%>/insertIntoCart?isbn=<%=b.getIsbn()%>">カートに入れる</a>
 			</td>
 		</tr>

@@ -6,12 +6,13 @@
  作成者：髙垣湧侑翔
   --%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, bean.Book, util.MyFormat" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, bean.Book, util.MyFormat"%>
 <%
-    ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
-    MyFormat mf = new MyFormat();
-    int total = 0;
+ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
+MyFormat mf = new MyFormat();
+int total = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -20,45 +21,51 @@
 <title>購入品確認</title>
 </head>
 <body>
-    <%@ include file="/common/header.jsp" %>
-    
-    <div class="page-center">
-        <div class="links-section">
-            <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
-            <a href="<%= request.getContextPath() %>/list">[書籍一覧]</a>
-        </div>
-        <h2>購入品確認</h2>
-    </div>
-    <hr align="center" size="2" color="black" width="100%">
-    
-    <p align="center">下記の商品を購入しました。<br>ご利用ありがとうございました。</p>
-    
-    <table align="center" border="1" class="form-table">
-        <tr class="table-header-row">
-            <th>ISBN</th>
-            <th>TITLE</th>
-            <th>価格</th>
-        </tr>
-        <% 
-        if(list != null) { 
-            for(Book b : list) {
-                total += b.getPrice();
-        %>
-        <tr>
-            <td align="center"><%= b.getIsbn() %></td>
-            <td><%= b.getTitle() %></td>
-            <td align="right"><%= mf.moneyFormat(b.getPrice()) %></td>
-        </tr>
-        <% 
-            }
-        } 
-        %>
-        <tr>
-            <td colspan="2" align="center" class="header-blue">合計</td>
-            <td align="right"><%= mf.moneyFormat(total) %></td>
-        </tr>
-    </table>
-    
-    <%@ include file="/common/footer.jsp" %>
+	<%@ include file="/common/header.jsp"%>
+
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+		</div>
+		<h2>購入品確認</h2>
+	</div>
+	<hr align="center" size="2" color="black" width="100%">
+
+	<p align="center">
+		下記の商品を購入しました。<br>ご利用ありがとうございました。
+	</p>
+
+	<table align="center" border="1" class="form-table">
+		<tr class="table-header-row">
+			<th>ISBN</th>
+			<th>TITLE</th>
+			<th>価格</th>
+		</tr>
+		<%
+		if (list != null) {
+			for (Book b : list) {
+				total += b.getPrice();
+		%>
+		<tr>
+			<td align="center"><%=b.getIsbn()%></td>
+			<td><%=b.getTitle()%></td>
+			<td align="right"><%=mf.moneyFormat(b.getPrice())%></td>
+		</tr>
+		<%
+		}
+		}
+		%>
+	</table>
+	<hr
+		style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
+	<table align="right" style="width: 43%">
+		<tr>
+			<td class="form-row-header">合計</td>
+			<td align="left"><%=mf.moneyFormat(total)%></td>
+		</tr>
+	</table>
+
+	<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

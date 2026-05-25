@@ -20,8 +20,8 @@
 </head>
 <body>
     <%@ include file="/common/header.jsp" %>
-    <div class="page-center">
-        <div class="links-section">
+	<div class="nav-header">
+		<div class="nav-header-links">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
             <a href="<%= request.getContextPath() %>/list">[書籍一覧]</a>
         </div>
@@ -33,15 +33,15 @@
     
     <table align="center" border="1" class="form-table-40">
         <tr>
-            <td class="header-blue">ISBN</td>
+            <td class="form-row-header">ISBN</td>
             <td><%= book.getIsbn() %></td>
         </tr>
         <tr>
-            <td class="header-blue">TITLE</td>
+            <td class="form-row-header">TITLE</td>
             <td><%= book.getTitle() %></td>
         </tr>
         <tr>
-            <td class="header-blue">価格</td>
+            <td class="form-row-header">価格</td>
             <td><%= mf.moneyFormat(book.getPrice()) %></td>
         </tr>
     </table>

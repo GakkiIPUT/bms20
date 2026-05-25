@@ -1,8 +1,8 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver1.0
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
  * プログラム名：ListServlet.java
  * プログラムの説明：書籍一覧の取得および画面表示を制御するサーブレットクラス。
- * 作成日：2026年5月12日
+ * 作成日：2026年5月20日
  * 作成者：髙垣湧侑翔
 */
 
@@ -27,22 +27,24 @@ import dao.BookDAO;
 @WebServlet("/list")
 public class ListServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String error = "";
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        try {
-        	BookDAO dao = new BookDAO();
-            ArrayList<Book> list = dao.selectAll();
-            request.setAttribute("book_list", list);
+		// 制御用の変数を初期化
+		String path = "/view/list.jsp";
+		String error = null;
+		String cmd = "menu";
 
-        } catch (IllegalStateException e) {
-            error = "DB接続エラーの為、一覧表示は行えませんでした。";
-            request.setAttribute("error", error);
-            request.setAttribute("cmd", "menu");
-            request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-            return;
-        }
+		try {
+			BookDAO dao = new BookDAO();
+			ArrayList<Book> list = dao.selectAll();
+			request.setAttribute("book_list", list);
 
-        request.getRequestDispatcher("/view/list.jsp").forward(request, response);
-    }
+		} catch (IllegalStateException e) {
+			path = "/view/error.jsp";
+			error = "DB接続エラーの為、一覧表示は行えませんでした。";
+			cmd = "menu";
+			return;
+		}
+		request.getRequestDispatcher(path).forward(request, response);
+	}
 }

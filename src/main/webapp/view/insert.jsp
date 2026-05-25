@@ -7,16 +7,18 @@
  --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <title>書籍登録</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
 
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a> 
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> 
 			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
 		<div class="nav-header-title">

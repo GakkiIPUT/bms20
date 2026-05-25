@@ -20,8 +20,8 @@
 </head>
 <body>
     <%@ include file="/common/header.jsp" %>
-    <div class="page-center">
-        <div class="links-section">
+	<div class="nav-header">
+		<div class="nav-header-links">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
         </div>
         <h2>初期データ登録</h2>

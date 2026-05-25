@@ -21,8 +21,8 @@
 <body>
     <%@ include file="/common/header.jsp" %>
     
-    <div class="nav-box">
-        <div class="nav-links">
+	<div class="nav-header">
+		<div class="nav-header-links">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
         </div>
         <h2>購入状況</h2>

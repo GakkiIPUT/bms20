@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver1.0
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
  * プログラム名：BookDAO.java
  * プログラムの説明：bookinfoテーブルに対する検索・登録・更新・削除のSQL実行を担当する。
  * 作成日：2026年5月12日
@@ -272,28 +272,29 @@ public class BookDAO {
 		PreparedStatement pstmt = null;// 戻り値として返すためのArrayListを初期化
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		String sql = "SELECT isbn, title, price FROM bookinfo"
-				+ " WHERE isbn LIKE % ? % AND title LIKE % ? %"
-				+ " AND price LIKE % ? %";
+				+ " WHERE isbn LIKE ?  AND title LIKE ?"
+				+ " AND price LIKE ?";
+		
 		try {
 			// DB接続を取得
 			con = getConnection();
 			// SQLを発行するためのPreparedStatementオブジェクトを生成
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, isbn);
-			pstmt.setString(2, title);
-			pstmt.setString(3, price);
-			ResultSet rs = pstmt.executeQuery(sql);
+			pstmt.setString(1, "%" + isbn + "%");
+			pstmt.setString(2, "%" + title + "%");
+			pstmt.setString(3, "%" + price + "%");
+			ResultSet rs = pstmt.executeQuery();
 
 			// 結果セットのカーソルを順次進めながら全行を処理する
 			while (rs.next()) {
 				// 1行分のデータを格納するためのBookインスタンスを生成
-				Book b = new Book();
+				Book book = new Book();
 
 				// データベースから取得した値をDTOにセット
-				b.setIsbn(rs.getString("isbn"));
-				b.setTitle(rs.getString("title"));
-				b.setPrice(rs.getInt("price"));// リストにDTOを追加
-				bookList.add(b);
+				book.setIsbn(rs.getString("isbn"));
+				book.setTitle(rs.getString("title"));
+				book.setPrice(rs.getInt("price"));// リストにDTOを追加
+				bookList.add(book);
 			}
 		} catch (SQLException e) {
 			// SQL実行時にエラーが発生した場合

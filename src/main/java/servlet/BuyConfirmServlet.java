@@ -1,3 +1,10 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プログラム名：BuyConfirmServlet.java
+ * プログラムの説明：
+ * 作成日：2026年5月20日
+ * 作成者：髙垣湧侑翔
+*/
 package servlet;
 
 import java.io.IOException;
@@ -15,31 +22,43 @@ import bean.Order;
 import bean.User;
 import dao.BookDAO;
 import dao.OrderDAO;
+import util.SendMail;
 
+/**
+ * 購入確定処理を行います。
+ * セッションとカートの確認、注文情報の登録、確認メールの送信、
+ * カートのクリアを実施し、確認ページへフォワードします。
+ */
 @WebServlet("/buyConfirm")
 public class BuyConfirmServlet extends HttpServlet {
-
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		
+		// 制御用の変数を初期化
+		String path = "/view/buyConfirm.jsp";
+		String error = null;
+		String cmd = "logout";
 
 		try {
-			// ① セッションから"user"を取得する。(セッション切れの場合はerror.jspに遷移する)
+			// セッションから"user"を取得する。(セッション切れの場合はerror.jspに遷移する)
 			User user = (User) session.getAttribute("user");
 			if (user == null) {
-				request.setAttribute("error", "セッション切れの為、購入は出来ません。");
-				request.setAttribute("cmd", "logout");
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				path = "/view/error.jsp";
+				error = "セッション切れの為、購入は出来ません。";
+				cmd = "logout";
 				return;
 			}
 
-			// ② セッションから"order_list"を取得する。(カートの中身がない場合はerror.jspに遷移する)
+			// セッションから"order_list"を取得する。(カートの中身がない場合はerror.jspに遷移する)
 			@SuppressWarnings("unchecked")
 			ArrayList<Order> orderList = (ArrayList<Order>) session.getAttribute("order_list");
 			if (orderList == null || orderList.size() == 0) {
-				request.setAttribute("error", "カートの中に何も無かったので購入は出来ません。");
-				request.setAttribute("cmd", "menu");
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				path = "/view/error.jsp";
+				error = "カートの中に何も無かったので購入は出来ません。";
+				cmd = "menu";
 				return;
 			}
 
@@ -48,35 +67,60 @@ public class BuyConfirmServlet extends HttpServlet {
 			OrderDAO orderDao = new OrderDAO();
 			ArrayList<Book> bookList = new ArrayList<Book>();
 
-			// ③ 関連メソッドをorder_listの(カート追加データ分)だけ呼び出す。
+			// メール本文の土台を構築
+			StringBuilder mailBody = new StringBuilder();
+			mailBody.append(user.getUserid()).append("様\n");
+			mailBody.append("本のご購入ありがとうございます。\n");
+			mailBody.append("以下内容でご注文を受け付けましたので、ご連絡致します。\n\n");
+
+			int total = 0; // 合計金額用変数
+
+			// 関連メソッドをorder_listの(カート追加データ分)だけ呼び出す。
 			for (Order order : orderList) {
+
 				// 書籍情報の取得
 				Book book = bookDao.selectByIsbn(order.getIsbn());
+
 				// 購入情報の登録
 				orderDao.insert(order);
 
-				// ④ 取得した各BookをListに追加する
+				// 取得した各BookをListに追加する
 				bookList.add(book);
+
+				// ループ中にメール明細本文を追加する
+				mailBody.append(book.getIsbn()).append(" ")
+						.append(book.getTitle()).append(" ")
+						.append(book.getPrice()).append("円\n");
+
+				total += book.getPrice();
+
 			}
+
+			// メールのフッター部分（合計金額など）を結合
+			mailBody.append("\n合計 }").append(total).append("円\n");
+			mailBody.append("またのご利用よろしくお願いします。");
 
 			// リクエストスコープに"book_list"という名前で格納する。
 			request.setAttribute("book_list", bookList);
 
-			// ⑤ "order_list"の注文情報内容をメール送信する。（オプション機能のためコンソール出力等の代替処理）
-			// SendMail sendMail = new SendMail();
-			// sendMail.sendOrderMail(user, bookList);
-			System.out.println("※ここにメール送信処理が入ります");
+			// "order_list"の注文情報内容をメール送信する。
+			SendMail sendMail = new SendMail();
+			sendMail.sendMail(user.getEmail(), "書籍ご購入ありがとうございました", mailBody.toString());
 
-			// ⑥ セッションの"order_list"情報をクリアする。
+			// セッションの"order_list"情報をクリアする。
 			session.setAttribute("order_list", null);
 
-			// ⑦ buyConfirm.jspにフォワードする。
-			request.getRequestDispatcher("/view/buyConfirm.jsp").forward(request, response);
-
 		} catch (Exception e) {
-			request.setAttribute("error", "DB接続エラーの為、購入は出来ません。");
-			request.setAttribute("cmd", "logout");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			path = "/view/error.jsp";
+			error = "DB接続エラーの為、購入は出来ません。";
+			cmd = "logout";
+			return;
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 }

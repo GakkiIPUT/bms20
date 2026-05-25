@@ -11,20 +11,21 @@
 <%
 Book book = (Book) request.getAttribute("book");
 MyFormat format = new MyFormat();
-
 %>
 
+<!DOCTYPE html>
 <html>
 <head>
 <title>書籍変更</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
 
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp" class="nav-links">[メニュー]</a>
-			<a href="<%=request.getContextPath()%>/view/insert.jsp" class="nav-links">[書籍登録]</a>
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
+			<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
 			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
 		<div class="nav-header-title">
@@ -32,7 +33,7 @@ MyFormat format = new MyFormat();
 		</div>
 	</div>
 
-	<hr align="center" size="2" color="green" width="100%">
+	<hr align="center" size="2" color="black" width="100%">
 
 	<form action="<%=request.getContextPath()%>/update" method="get">
 		<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">

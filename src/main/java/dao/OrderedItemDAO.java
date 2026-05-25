@@ -1,5 +1,12 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プログラム名：OrderedItemDAO.java
+ * プログラムの説明：bookinfo テーブルと orderinfo テーブルを結合して、注文済み商品の情報を取得します。
+ * 					userid、title、date を含む OrderedItem DTO のリストを返します。
+ * 作成日：2026年5月20日
+ * 作成者：髙垣湧侑翔
+*/
 package dao;
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;

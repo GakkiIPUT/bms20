@@ -1,3 +1,11 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プログラム名：LoginServlet.java
+ * プログラムの説明：ログイン処理を制御するサーブレットクラス。
+ * 作成日：2026年5月20日
+ * 作成者：髙垣湧侑翔
+*/
+
 package servlet;
 
 import java.io.IOException;
@@ -13,24 +21,34 @@ import jakarta.servlet.http.HttpSession;
 import bean.User;
 import dao.UserDAO;
 
+/**
+ * パスワード保護のため doPost で処理を行う。
+ * ログインフォームの POST を処理します。
+ * UserDAO による認証を行い、成功時はセッションとクッキーを設定してメニュー画面へ遷移、
+ * 失敗時はログイン画面へ戻します。DB エラー時はエラーページへフォワードします。
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-	// 詳細設計書の指示通り、パスワード保護のため doPost で処理を行う
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
 
-		// ① userid, password入力パラメータを取得する
+		// userid, password入力パラメータを取得する
 		String userid = request.getParameter("user");
 		String password = request.getParameter("password");
 
+		// 制御用の変数を初期化
+		String path = "/view/login.jsp";
+		String error = null;
+		String cmd = "logout";
+
 		try {
-			// ② UserDAOをインスタンス化し、関連メソッドを呼び出す
+			// UserDAOをインスタンス化し、関連メソッドを呼び出す
 			UserDAO userDaoObj = new UserDAO();
 			User user = userDaoObj.selectByUser(userid, password);
 
-			// ③ User情報取得の有無でフォワード先を呼び別ける
+			// User情報取得の有無でフォワード先を呼び別ける
 			if (user != null && user.getUserid() != null) {
 				// User情報が取得出来た場合
 
@@ -47,25 +65,31 @@ public class LoginServlet extends HttpServlet {
 				cookiePass.setMaxAge(60 * 60 * 24 * 5);
 				response.addCookie(cookiePass);
 
-				// menu.jspにフォワードする
-				request.getRequestDispatcher("/view/menu.jsp").forward(request, response);
-
-			} else {
-				// User情報が取得出来なかった場合
-				request.setAttribute("message", "入力データが間違っています！");
-				request.getRequestDispatcher("/view/login.jsp").forward(request, response);
+				path = "/view/menu.jsp";
+				return;
 			}
+			// User情報が取得出来なかった場合
+			request.setAttribute("message", "入力データが間違っています！");
+			path = "/view/login.jsp";
 
 		} catch (IllegalStateException e) {
 			// DB接続エラーなどの場合
-			request.setAttribute("error", "DB接続エラーの為、ログインは出来ません。");
-			request.setAttribute("cmd", "logout");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			path = "/view/error.jsp";
+			error = "DB接続エラーの為、ログインは出来ません。 ";
+			cmd = "logout";
+			return;
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 
 	// doGetでアクセスされた場合もlogin.jspへ遷移させるか、doPostを呼び出す
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/view/login.jsp").forward(request, response);
 	}
 }

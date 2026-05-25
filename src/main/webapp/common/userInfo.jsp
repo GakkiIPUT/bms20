@@ -45,5 +45,4 @@
             <td><%= authorityStr %></td>
         </tr>
     </table>
-    <div class="links-section-clear"></div>
 </div>

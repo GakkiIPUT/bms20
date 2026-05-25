@@ -1,8 +1,8 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver1.0
+ * プロジェクト名：書籍管理システムWeb版Ver2.0
  * プログラム名：InsertServlet.java
  * プログラムの説明：書籍情報の登録処理を制御するサーブレットクラス。
- * 作成日：2026年5月12日
+ * 作成日：2026年5月20日
  * 作成者：髙垣湧侑翔
 */
 
@@ -34,51 +34,57 @@ public class InsertServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String priceStr = request.getParameter("price");
 
-		String error = "";
-
-		if (isbn.equals("")) {
-			error = "ISBNが未入力の為、書籍登録処理は行えませんでした。";
-		} else if (title.equals("")) {
-			error = "タイトルが未入力の為、書籍登録処理は行えませんでした。";
-		} else if (priceStr.equals("")) {
-			error = "価格が未入力の為、書籍登録処理は行えませんでした。";
-		}
-
-		if (!error.equals("")) {
-			request.setAttribute("error", error);
-			request.setAttribute("cmd", "list");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			return;
-		}
+		// 制御用の変数を初期化
+		String path = "/list";
+		String error = null;
+		String cmd = "list";
 
 		try {
+			if (isbn == null || isbn.equals("")) {
+				error = "ISBNが未入力の為、書籍登録処理は行えませんでした。";
+				path = "/view/error.jsp";
+				return;
+			}
+			if (title.equals("")) {
+				error = "タイトルが未入力の為、書籍登録処理は行えませんでした。";
+				path = "/view/error.jsp";
+				return;
+			}
+			if (priceStr == null || priceStr.equals("")) {
+				error = "価格が未入力の為、書籍登録処理は行えませんでした。";
+				path = "/view/error.jsp";
+				return;
+			}
+			// 入力チェックを通過した場合の正常処理
 			int price = Integer.parseInt(priceStr);
 			BookDAO dao = new BookDAO();
 
 			if (dao.selectByIsbn(isbn).getIsbn() != null) {
-				request.setAttribute("error", "入力ISBNは既に登録済みの為、書籍登録処理は行えませんでした。");
-				request.setAttribute("cmd", "list");
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				cmd = "list";
+				error = "入力ISBNは既に登録済みの為、書籍登録処理は行えませんでした。";
+				path = "/view/error.jsp";
 				return;
 			}
-
 			Book book = new Book();
 			book.setIsbn(isbn);
 			book.setTitle(title);
 			book.setPrice(price);
-
 			dao.insert(book);
-			request.getRequestDispatcher("/list").forward(request, response);
 
 		} catch (NumberFormatException e) {
-			request.setAttribute("error", "価格の値が不正の為、書籍登録処理は行えませんでした。");
-			request.setAttribute("cmd", "list");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			error = "価格の値が不正の為、書籍登録処理は行えませんでした。";
+			path = "/view/error.jsp";
 		} catch (IllegalStateException e) {
-			request.setAttribute("error", "DB接続エラーの為、書籍登録処理は行えませんでした。");
-			request.setAttribute("cmd", "logout");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			error = "DB接続エラーの為、書籍登録処理は行えませんでした。";
+			path = "/view/error.jsp";
+			cmd = "menu";
+		} finally {
+			// 例外が発生してもしなくても、最後に1回だけまとめてフォワード処理を行う
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
-
 }
