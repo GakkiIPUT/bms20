@@ -15,7 +15,7 @@
 <html>
 <head>
 <title>購入履歴</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 	<table align="center" width="800">

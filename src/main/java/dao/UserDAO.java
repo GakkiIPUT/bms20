@@ -43,14 +43,14 @@ public class UserDAO {
 			throw new IllegalStateException(e);
 		}
 	}
-	
+
 	/**
-     * userid に基づいてユーザーを選択します。
-     *
-     * @param userid 検索対象のユーザー ID
-     * @return ユーザーが見つかった場合は User DTO、見つからない場合は null
-     * @throws データベースエラーが発生した場合は IllegalStateException をスローします
-     */
+	 * userid に基づいてユーザーを選択します。
+	 *
+	 * @param userid 検索対象のユーザー ID
+	 * @return ユーザーが見つかった場合は User DTO、見つからない場合は null
+	 * @throws データベースエラーが発生した場合は IllegalStateException をスローします
+	 */
 	public User selectByUser(String userid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -63,7 +63,7 @@ public class UserDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				user = new User();
 				user.setUserid(rs.getString("user"));
@@ -80,13 +80,13 @@ public class UserDAO {
 	}
 
 	/**
-     * ユーザーIDとパスワードに基づいてユーザーを選択します（認証に使用されます）。
-     *
-     * @param userid   検索するユーザーID
-     * @param password 照合するパスワード
-     * @return 認証情報が一致した場合、User DTOを返します。一致しない場合はnullを返します。
-     * @throws データベースエラーが発生した場合、IllegalStateExceptionをスローします
-     */
+	 * ユーザーIDとパスワードに基づいてユーザーを選択します（認証に使用されます）。
+	 *
+	 * @param userid   検索するユーザーID
+	 * @param password 照合するパスワード
+	 * @return 認証情報が一致した場合、User DTOを返します。一致しない場合はnullを返します。
+	 * @throws データベースエラーが発生した場合、IllegalStateExceptionをスローします
+	 */
 	public User selectByUser(String userid, String password) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -116,11 +116,6 @@ public class UserDAO {
 		return user;
 	}
 
-	
-	
-	
-	
-	
 	public java.util.ArrayList<User> selectAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -140,7 +135,9 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
+		} finally {
+			closeResources(con, pstmt);
+		}
 		return userList;
 	}
 
@@ -159,7 +156,9 @@ public class UserDAO {
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
+		} finally {
+			closeResources(con, pstmt);
+		}
 		return count;
 	}
 
@@ -175,7 +174,9 @@ public class UserDAO {
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
+		} finally {
+			closeResources(con, pstmt);
+		}
 		return count;
 	}
 
@@ -194,7 +195,9 @@ public class UserDAO {
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
+		} finally {
+			closeResources(con, pstmt);
+		}
 		return count;
 	}
 
@@ -218,10 +221,15 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
+		} finally {
+			closeResources(con, pstmt);
+		}
 		return userList;
 	}
 
+	/**
+	 * ユーザーのパスワードを更新します。
+	 */
 	public int updateForPassword(String userid, String password) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -235,34 +243,12 @@ public class UserDAO {
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
-		} finally { closeResources(con, pstmt); }
-		return count;
-	}
-	
-	/**
-	 * ユーザーのパスワードを更新します。
-	 */
-	public void updatePassword(String userid, String newPassword) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String sql = "UPDATE userinfo SET password = ? WHERE user = ?";
-		try {
-			con = getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, newPassword);
-			pstmt.setString(2, userid);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new IllegalStateException(e);
 		} finally {
 			closeResources(con, pstmt);
 		}
+		return count;
 	}
-	
-	
-	
-	
-	
+
 	private void closeResources(Connection con, PreparedStatement pstmt) {
 		try {
 			if (pstmt != null)

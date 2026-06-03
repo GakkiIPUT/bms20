@@ -15,7 +15,7 @@ String cmd = (String) request.getAttribute("cmd");
 <html>
 <head>
 <title>エラー</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>

@@ -22,7 +22,7 @@
 <html>
 <head>
 <title>売上げ状況</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 <table align="center" width="800">

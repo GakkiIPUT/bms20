@@ -9,14 +9,13 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.User"%>
 <%
-
-    User user = (User)session.getAttribute("user");
-    if(user == null){
-        request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
-        request.setAttribute("cmd","logout");
-        request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-        return;
-    }
+User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
 %>
 
 <!DOCTYPE html>
@@ -25,7 +24,7 @@
 <meta charset="UTF-8">
 <title>メニュー</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>

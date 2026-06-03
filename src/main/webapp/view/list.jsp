@@ -28,7 +28,7 @@ MyFormat format = new MyFormat();
 <head>
 <title>書籍一覧</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
@@ -77,12 +77,16 @@ MyFormat format = new MyFormat();
 				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=detail"><%=b.getIsbn()%></a></td>
 			<td><%=b.getTitle()%></td>
 			<td><%=format.moneyFormat(b.getPrice())%></td>
-			<td><a
-				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
-				<b>&emsp;&emsp;</b> <a
-				href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
-				<b>&emsp;&emsp;</b> <a
-				href="<%=request.getContextPath()%>/insertIntoCart?isbn=<%=b.getIsbn()%>">カートに入れる</a>
+			<td>
+				<a href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
+				<b>&emsp;&emsp;</b>
+				<a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
+				<b>&emsp;&emsp;</b>
+				<form action="<%=request.getContextPath()%>/insertIntoCart" method="get" style="display:inline; margin:0; padding:0;">
+					<input type="hidden" name="isbn" value="<%=b.getIsbn()%>">
+					<input type="text" name="quantity" size="3" value="1">
+					<input type="submit" value="カートに入れる">
+				</form>
 			</td>
 		</tr>
 		<%

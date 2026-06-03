@@ -45,7 +45,7 @@ public class InsertServlet extends HttpServlet {
 				path = "/view/error.jsp";
 				return;
 			}
-			if (isbn == null ||title.equals("")) {
+			if (title == null || title.equals("")) {
 				error = "タイトルが未入力の為、書籍登録処理は行えませんでした。";
 				path = "/view/error.jsp";
 				return;

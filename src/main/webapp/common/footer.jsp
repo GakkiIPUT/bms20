@@ -8,7 +8,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 <footer>
 	<hr>
 	<p align="left">Copyright (C) 2026 All Rights Reserved.</p>

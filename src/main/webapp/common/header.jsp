@@ -8,7 +8,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 
 <header>
 	<h1>書籍管理システムWeb版Ver3.0</h1>

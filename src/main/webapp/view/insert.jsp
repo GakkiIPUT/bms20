@@ -22,7 +22,7 @@
 <html>
 <head>
 <title>書籍登録</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>

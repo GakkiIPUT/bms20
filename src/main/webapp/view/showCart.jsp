@@ -31,7 +31,7 @@ int total = 0;
 <meta charset="UTF-8">
 <title>カート内容</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>

@@ -44,11 +44,15 @@ public class ChangePasswordServlet extends HttpServlet {
 			String newPassword = request.getParameter("password");
 			String newPasswordCk = request.getParameter("password_ck");
 
-			// ③入力値チェック
-			if (oldPassword == null || oldPassword.equals("") || 
-				newPassword == null || newPassword.equals("") || 
-				newPasswordCk == null || newPasswordCk.equals("")) {
-				error = "未入力の項目があります。";
+			// ③入力値チェック（項目ごとの個別メッセージ）
+			if (oldPassword == null || oldPassword.equals("")) {
+				error = "旧パスワードを入力して下さい!";
+				path = "/view/error.jsp";
+			} else if (newPassword == null || newPassword.equals("")) {
+				error = "新パスワードを入力して下さい!";
+				path = "/view/error.jsp";
+			} else if (newPasswordCk == null || newPasswordCk.equals("")) {
+				error = "確認用パスワードを入力して下さい!";
 				path = "/view/error.jsp";
 			} else if (!oldPassword.equals(user.getPassword())) {
 				error = "旧パスワードが間違っています。";
@@ -57,10 +61,10 @@ public class ChangePasswordServlet extends HttpServlet {
 				error = "新パスワードと確認用パスワードが一致しません。";
 				path = "/view/error.jsp";
 			} else {
-				// ④UserDAOでパスワード変更処理を呼び出し
+				// ④UserDAOでパスワード変更処理を呼び出し（メソッド名を updateForPassword に変更）
 				UserDAO userDao = new UserDAO();
-				userDao.updatePassword(user.getUserid(), newPassword);
-				
+				userDao.updateForPassword(user.getUserid(), newPassword);
+                
 				// ⑤新パスワードをセッションのuserに設定し、再格納
 				user.setPassword(newPassword);
 				session.setAttribute("user", user);

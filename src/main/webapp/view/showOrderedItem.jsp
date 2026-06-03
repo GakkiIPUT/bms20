@@ -27,7 +27,7 @@ boolean isAdmin = (user != null && "2".equals(user.getAuthority()));
 <meta charset="UTF-8">
 <title>購入状況</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
