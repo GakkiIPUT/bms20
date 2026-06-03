@@ -1,7 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.User"%>
 <%
-
     User user = (User)session.getAttribute("user");
     if(user == null){
         request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
