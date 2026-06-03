@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
+    <%@ include file="/common/header.jsp" %>
+    
 	<table align="center" width="800">
 		<tr>
 			<td width="80" align="center"><a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a></td>
@@ -25,7 +27,7 @@
 			<td width="80" align="center"></td>
 		</tr>
 	</table>
-	<hr align="center" size="2" color="black" width="800">
+	<hr align="center" size="2" color="black" width="100%">
 
 	<table align="center">
 		<tr>

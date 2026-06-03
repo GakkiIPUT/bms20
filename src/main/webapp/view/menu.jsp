@@ -32,7 +32,7 @@ if (user == null) {
 	<%-- ユーザー情報表示 兼 セッション切れチェック --%>
 	<%@ include file="/common/userInfo.jsp"%>
 	<hr align="center" size="2" color="black" width="100%">
-	<h2 align="center">MENU</h2>
+	<h2 align="center"class="title">MENU</h2>
 	<hr align="center" size="2" color="black" width="100%">
 
 	<table align="center">

@@ -18,15 +18,13 @@
 	href="<%=request.getContextPath()%>/CSS/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%>
-	<table align="center" width="800">
-		<tr>
-			<td width="80" align="center"><a
-				href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a></td>
-			<td width="640" align="center"><h2 class="title">パスワード変更</h2></td>
-			<td width="80" align="center"></td>
-		</tr>
-	</table>
+<%@ include file="../common/header.jsp"%>
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
+		</div>
+		<h2 class="title">パスワード変更</h2>
+	</div>
 	<hr align="center" size="2" color="black" width="100%">
 
 	<table align="center">

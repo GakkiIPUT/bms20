@@ -19,7 +19,7 @@
 	<div class="nav-header">
 		<div class="nav-header-links">
 			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/listUser">【ユーザー一覧】</a>
+				href="<%=request.getContextPath()%>/listUser">[ユーザー一覧]</a>
 		</div>
 		<h2 class="title">ユーザー登録</h2>
 	</div>
