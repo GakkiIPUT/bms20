@@ -8,6 +8,17 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="bean.User"%>
+<%
+// 仕様書通りのセッションチェック記述例
+User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
+%>
 <%@ page import="java.util.ArrayList, bean.Book, util.MyFormat"%>
 <%
 ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
@@ -66,7 +77,8 @@ int total = 0;
 		}
 		%>
 	</table>
-	<hr style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
+	<hr
+		style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
 	<table align="center" style="width: 60%; margin-top: 0;">
 		<tr>
 			<td></td>

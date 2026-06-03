@@ -8,6 +8,17 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="java.util.ArrayList,bean.Book, util.MyFormat"%>
+<%@page import="bean.User"%>
+<%
+// 仕様書通りのセッションチェック記述例
+User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
+%>
 <%
 ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
 MyFormat format = new MyFormat();
@@ -16,15 +27,16 @@ MyFormat format = new MyFormat();
 <html>
 <head>
 <title>書籍一覧</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/CSS/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
 
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
-			<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+				href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
 		</div>
 		<div class="nav-header-title">
 			<h2 class="title">書籍一覧</h2>
@@ -37,9 +49,9 @@ MyFormat format = new MyFormat();
 
 		<form action="<%=request.getContextPath()%>/search" method="get"
 			class="form-inline">
-			ISBN:<input type="text" name="isbn" class="input-text-border-gray"> 
-			TITLE:<input type="text"name="title" class="input-text-border-gray"> 
-			価格:<input type="text" name="price" class="input-text-border-gray"> 
+			ISBN:<input type="text" name="isbn" class="input-text-border-gray">
+			TITLE:<input type="text" name="title" class="input-text-border-gray">
+			価格:<input type="text" name="price" class="input-text-border-gray">
 			<input type="submit" value="検索">
 		</form>
 
@@ -67,10 +79,10 @@ MyFormat format = new MyFormat();
 			<td><%=format.moneyFormat(b.getPrice())%></td>
 			<td><a
 				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
-				<b >&emsp;&emsp;</b>
-				<a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
-				<b >&emsp;&emsp;</b>
-				<a href="<%=request.getContextPath()%>/insertIntoCart?isbn=<%=b.getIsbn()%>">カートに入れる</a>
+				<b>&emsp;&emsp;</b> <a
+				href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
+				<b>&emsp;&emsp;</b> <a
+				href="<%=request.getContextPath()%>/insertIntoCart?isbn=<%=b.getIsbn()%>">カートに入れる</a>
 			</td>
 		</tr>
 		<%

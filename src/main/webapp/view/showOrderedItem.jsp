@@ -9,9 +9,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, bean.OrderedItem, bean.User"%>
+<%@page import="bean.User"%>
 <%
-ArrayList<OrderedItem> list = (ArrayList<OrderedItem>) request.getAttribute("ordered_list");
 User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
+ArrayList<OrderedItem> list = (ArrayList<OrderedItem>) request.getAttribute("ordered_list");
 boolean isAdmin = (user != null && "2".equals(user.getAuthority()));
 %>
 <!DOCTYPE html>

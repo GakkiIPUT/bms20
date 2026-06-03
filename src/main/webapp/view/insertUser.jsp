@@ -1,4 +1,15 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@page import="bean.User"%>
+<%
+    // 仕様書通りのセッションチェック記述例
+    User user = (User)session.getAttribute("user");
+    if(user == null){
+        request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
+        request.setAttribute("cmd","logout");
+        request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+        return;
+    }
+%>
 <html>
 <head>
 <title>ユーザー登録</title>
