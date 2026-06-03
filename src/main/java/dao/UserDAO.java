@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：UserDAO.java
  * プログラムの説明：DB接続とuserinfoテーブルに対するユーザー情報の取得や
  * 					パスワードに合致する情報を取得するSQL実行を担当する。
@@ -116,6 +116,153 @@ public class UserDAO {
 		return user;
 	}
 
+	
+	
+	
+	
+	
+	public java.util.ArrayList<User> selectAll() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		java.util.ArrayList<User> userList = new java.util.ArrayList<>();
+		String sql = "SELECT * FROM userinfo";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setUserid(rs.getString("user"));
+				user.setPassword(rs.getString("password"));
+				user.setEmail(rs.getString("email"));
+				user.setAuthority(rs.getString("authority"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return userList;
+	}
+
+	public int insert(User user) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		String sql = "INSERT INTO userinfo VALUES(?, ?, ?, ?)";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUserid());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getEmail());
+			pstmt.setString(4, user.getAuthority());
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return count;
+	}
+
+	public int delete(String userid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		String sql = "DELETE FROM userinfo WHERE user = ?";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return count;
+	}
+
+	public int update(User user) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		String sql = "UPDATE userinfo SET password = ?, email = ?, authority = ? WHERE user = ?";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setString(3, user.getAuthority());
+			pstmt.setString(4, user.getUserid());
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return count;
+	}
+
+	public java.util.ArrayList<User> search(String userid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		java.util.ArrayList<User> userList = new java.util.ArrayList<>();
+		String sql = "SELECT * FROM userinfo WHERE user LIKE ?";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%" + userid + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setUserid(rs.getString("user"));
+				user.setPassword(rs.getString("password"));
+				user.setEmail(rs.getString("email"));
+				user.setAuthority(rs.getString("authority"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return userList;
+	}
+
+	public int updateForPassword(String userid, String password) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		String sql = "UPDATE userinfo SET password = ? WHERE user = ?";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, password);
+			pstmt.setString(2, userid);
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally { closeResources(con, pstmt); }
+		return count;
+	}
+	
+	/**
+	 * ユーザーのパスワードを更新します。
+	 */
+	public void updatePassword(String userid, String newPassword) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE userinfo SET password = ? WHERE user = ?";
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, newPassword);
+			pstmt.setString(2, userid);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally {
+			closeResources(con, pstmt);
+		}
+	}
+	
+	
+	
+	
+	
 	private void closeResources(Connection con, PreparedStatement pstmt) {
 		try {
 			if (pstmt != null)

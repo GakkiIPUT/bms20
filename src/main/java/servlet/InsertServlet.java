@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：InsertServlet.java
  * プログラムの説明：書籍情報の登録処理を制御するサーブレットクラス。
  * 作成日：2026年5月20日
@@ -45,7 +45,7 @@ public class InsertServlet extends HttpServlet {
 				path = "/view/error.jsp";
 				return;
 			}
-			if (title.equals("")) {
+			if (isbn == null ||title.equals("")) {
 				error = "タイトルが未入力の為、書籍登録処理は行えませんでした。";
 				path = "/view/error.jsp";
 				return;

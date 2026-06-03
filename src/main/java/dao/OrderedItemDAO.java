@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：OrderedItemDAO.java
  * プログラムの説明：bookinfo テーブルと orderinfo テーブルを結合して、注文済み商品の情報を取得します。
  * 					userid、title、date を含む OrderedItem DTO のリストを返します。
@@ -40,7 +40,7 @@ public class OrderedItemDAO {
 		ArrayList<OrderedItem> list = new ArrayList<>();
 
 		// SQL文例: isbnを条件に結合
-		String sql = "SELECT o.user, b.title, o.date FROM bookinfo b INNER JOIN orderinfo o ON b.isbn = o.isbn";
+		String sql = "SELECT o.user, b.title, o.quantity, o.date FROM bookinfo b INNER JOIN orderinfo o ON b.isbn = o.isbn";
 
 		try {
 			con = getConnection();
@@ -51,6 +51,7 @@ public class OrderedItemDAO {
 				OrderedItem item = new OrderedItem();
 				item.setUserid(rs.getString("user"));
 				item.setTitle(rs.getString("title"));
+				item.setQuantity(rs.getInt("quantity"));
 				item.setDate(rs.getString("date"));
 				list.add(item);
 			}
@@ -58,6 +59,49 @@ public class OrderedItemDAO {
 			throw new IllegalStateException(e);
 		} finally {
 			closeResources(con, pstmt);
+		}
+		return list;
+	}
+
+	/**
+	 * 
+	 * @param userid
+	 * @return
+	 */
+	public ArrayList<OrderedItem> selectByUser(String userid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ArrayList<OrderedItem> list = new ArrayList<>();
+		String sql = "SELECT o.user, b.title, o.quantity, o.date FROM bookinfo b, orderinfo o "
+				+ "WHERE b.isbn = o.isbn AND o.user = ?";
+
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				OrderedItem item = new OrderedItem();
+				item.setUserid(rs.getString("user"));
+				item.setTitle(rs.getString("title"));
+				item.setQuantity(rs.getInt("quantity"));
+				item.setDate(rs.getString("date"));
+				list.add(item);
+			}
+		} catch (SQLException e) {
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException ignore) {
+			}
 		}
 		return list;
 	}

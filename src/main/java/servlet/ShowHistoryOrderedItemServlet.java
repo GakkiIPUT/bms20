@@ -1,0 +1,61 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
+ * プログラム名：ShowHistoryOrderedItemServlet.java
+ * プログラムの説明：ログインユーザー個人の購入履歴表示を制御するサーブレットクラス。
+ * 作成者：髙垣湧侑翔
+*/
+package servlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import bean.OrderedItem;
+import bean.User;
+import dao.OrderedItemDAO;
+
+@WebServlet("/showHistoryOrderedItem")
+public class ShowHistoryOrderedItemServlet extends HttpServlet {
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+
+		String path = "/view/showHistoryOrderedItem.jsp";
+		String error = null;
+
+		try {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+
+			if (user == null) {
+				request.setAttribute("error", "セッション切れの為、購入履歴画面が表示できませんでした。");
+				request.setAttribute("cmd", "logout");
+				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				return;
+			}
+
+			// DAOからそのユーザー個人の購入履歴（リスト）を取得
+			OrderedItemDAO dao = new OrderedItemDAO();
+			ArrayList<OrderedItem> list = dao.selectByUser(user.getUserid());
+			
+			// 取得したListをリクエストスコープに格納
+			request.setAttribute("ordered_list", list);
+
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーの為、購入履歴画面が表示できませんでした。";
+			path = "/view/error.jsp";
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", "menu");
+			}
+			request.getRequestDispatcher(path).forward(request, response);
+		}
+	}
+}

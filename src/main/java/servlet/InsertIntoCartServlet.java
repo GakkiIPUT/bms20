@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：InsertIntoCartServlet.java
  * プログラムの説明：セッション内のカートに書籍を追加するサーブレットクラス。
  * 作成日：2026年5月20日
@@ -31,7 +31,8 @@ import dao.BookDAO;
 @WebServlet("/insertIntoCart")
 public class InsertIntoCartServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
 

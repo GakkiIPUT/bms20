@@ -1,5 +1,5 @@
 /*
- * プロジェクト名：書籍管理システムWeb版Ver2.0
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：OrderedItem.java
  * プログラムの説明：オーダー情報を保持するDTO（Data Transfer Object）クラス。
  * 作成日：2026年5月15日
@@ -16,6 +16,8 @@ public class OrderedItem {
 	//titleを格納する変数
 	private String title;
 
+	private int quantity;
+
 	//購入日付を格納する変数
 	private String date;
 
@@ -23,6 +25,7 @@ public class OrderedItem {
 	public OrderedItem() {
 		this.userid = null;
 		this.title = null;
+		this.quantity = 0;
 		this.date = null;
 	}
 
@@ -56,6 +59,22 @@ public class OrderedItem {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	/**
+	 * quantityのゲッターメソッド
+	 * @returnフィールド変数quantityで管理された値を返す
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+	
+	/**
+	 * quantityのセッターメソッド
+	 * @param引数に受け取った値をフィールド変数quantityに格納する
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	/**

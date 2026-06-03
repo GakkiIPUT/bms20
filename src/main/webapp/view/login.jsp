@@ -1,5 +1,5 @@
 <%--
- プロジェクト名：書籍管理システムWeb版Ver2.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：login.jsp
  プログラムの説明：ログイン画面。
  作成日：2026年5月18日
@@ -39,11 +39,11 @@
 	<form action="<%= request.getContextPath() %>/login" method="post">
 		<table align="center">
 			<tr>
-				<th class="header-blue">ユーザー</th>
+				<th class="header-color">ユーザー</th>
 				<td><input type="text" name="user" class="border-gray" value="<%= cookieUser %>"></td>
 			</tr>
 			<tr>
-				<th class="header-blue">パスワード</th>
+				<th class="header-color">パスワード</th>
 				<td><input type="password" name="password" class="border-gray" value="<%= cookiePass %>"></td>
 			</tr>
 			<tr>

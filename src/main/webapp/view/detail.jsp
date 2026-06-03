@@ -1,56 +1,53 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver1.0
+プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：detail.jsp
  プログラムの説明：書籍の1件詳細情報を表示する画面。
- 作成日：2026年5月12日
- 更新日：2026年5月19日
+ 作成日：2026年5月18日
  作成者：髙垣湧侑翔
  --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="bms.Book, util.MyFormat"%>
+	import="bean.Book, util.MyFormat"%>
 <%
 Book book = (Book) request.getAttribute("book");
 MyFormat format = new MyFormat();
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <title>書籍詳細情報</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/style.css">
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
 
-	<div class="nav-box">
-		<div class="nav-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp"
-				style="margin-right: 20px;">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/view/insert.jsp"
-				style="margin-right: 20px;">[書籍登録]</a> <a
-				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+	<div class="nav-header">
+		<div class="nav-header-links">
+			<a href="<%=request.getContextPath()%>/view/menu.jsp" >[メニュー]</a>
+			<a href="<%=request.getContextPath()%>/view/insert.jsp" >[書籍登録]</a>
+			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
-		<div>
-			<h2>書籍詳細情報</h2>
-
+		<div class="nav-header-title">
+			<h2 class="title">書籍詳細情報</h2>
 		</div>
 	</div>
 	<hr align="center" size="2" color="black" width="100%">
 	<br>
 
-	<table align="center" style="width: 30%; table-layout: fixed;">
+	<table align="center" class="form-table-30">
 		<tr>
 			<td colspan="2" align="center">
 				<form action="<%=request.getContextPath()%>/detail" method="get"
-					style="display: inline;">
+					class="form-inline">
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
 					<input type="hidden" name="cmd" value="update"> <input
-						type="submit" value="変更" class="btn-white">
-				</form> <a>&emsp;&emsp;</a>
+						type="submit" value="変更">
+				</form>
+				<a>&emsp;&emsp;</a>
 				<form action="<%=request.getContextPath()%>/delete" method="get"
-					style="display: inline;">
+					class="form-inline">
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
-					<input type="submit" value="削除" class="btn-white">
+					<input type="submit" value="削除">
 				</form>
 			</td>
 		</tr>
@@ -60,16 +57,16 @@ MyFormat format = new MyFormat();
 
 		</tr>
 		<tr>
-			<td class="bg-blue">ISBN</td>
-			<td class="bg-cyan"><%=book.getIsbn()%></td>
+			<td class="header-color">ISBN</td>
+			<td class="column-color"><%=book.getIsbn()%></td>
 		</tr>
 		<tr>
-			<td class="bg-blue">TITLE</td>
-			<td class="bg-cyan"><%=book.getTitle()%></td>
+			<td class="header-color">TITLE</td>
+			<td class="column-color"><%=book.getTitle()%></td>
 		</tr>
 		<tr>
-			<td class="bg-blue">価格</td>
-			<td class="bg-cyan"><%=format.moneyFormat(book.getPrice())%></td>
+			<td class="header-color">価格</td>
+			<td class="column-color"><%=format.moneyFormat(book.getPrice())%></td>
 		</tr>
 
 	</table>

@@ -1,5 +1,5 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver2.0
+プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：insertIniData.jsp
  プログラムの説明：初期データを登録し、確認画面を表示する。
  作成日：2026年5月18日
@@ -24,14 +24,14 @@
 		<div class="nav-header-links">
             <a href="<%= request.getContextPath() %>/view/menu.jsp">[メニュー]</a>
         </div>
-        <h2>初期データ登録</h2>
+        <h2 class="title">初期データ登録</h2>
     </div>
     <hr align="center" size="2" color="black" width="100%">
     
     <p align="center">初期データとして以下のデータを登録しました。</p>
     
     <table align="center" border="1" class="form-table-80">
-        <tr class="table-header-row">
+        <tr class="header-color">
             <th>ISBN</th>
             <th>TITLE</th>
             <th>価格</th>
