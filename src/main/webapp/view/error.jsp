@@ -1,11 +1,10 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver3.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：error.jsp
- プログラムの説明：システム内で発生したエラーメッセージを表示し、適切な画面へ誘導する。
- 作成日：2026年5月18日
+ プログラムの説明：エラー内容の表示画面。
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
- --%>
-
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%
 String error = (String) request.getAttribute("error");

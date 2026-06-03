@@ -1,11 +1,10 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver3.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：update.jsp
- プログラムの説明：特定の書籍情報を編集するための入力画面。
- 作成日：2026年5月18日
+ プログラムの説明：書籍情報の更新画面。
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
- --%>
-
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="bean.Book, util.MyFormat"%>
 <%@page import="bean.User"%>

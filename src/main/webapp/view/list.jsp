@@ -1,10 +1,10 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver3.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：list.jsp
- プログラムの説明：データベースから取得した書籍一覧を表示する画面。
- 作成日：2026年5月18日
+ プログラムの説明：書籍一覧の表示画面。
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
- --%>
+--%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="java.util.ArrayList,bean.Book, util.MyFormat"%>

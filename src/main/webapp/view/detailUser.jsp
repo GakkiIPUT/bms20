@@ -1,3 +1,10 @@
+<%--
+ プロジェクト名：書籍管理システムWeb版Ver3.0
+ プログラム名：detailUser.jsp
+ プログラムの説明：ユーザー詳細の表示画面。
+ 作成日：2026年6月3日
+ 作成者：髙垣湧侑翔
+--%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.User"%>
 <%

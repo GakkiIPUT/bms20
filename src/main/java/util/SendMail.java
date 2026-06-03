@@ -2,9 +2,9 @@
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：SendMail.java
  * プログラムの説明：JavaMail APIを利用して指定された宛先へメールを送信するユーティリティクラス。
- * 作成日：2026年5月19日
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 
 package util;
 
@@ -18,13 +18,17 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * JavaMail APIを利用してメール送信を行うユーティリティクラスです。
+ */
 public class SendMail {
 
 	/**
 	 * 指定された宛先、件名、本文でメールを送信します。
-	 * * @param to      送信先メールアドレス（購入したユーザーのアドレス）
+	 *
+	 * @param to 送信先メールアドレス（購入したユーザーのアドレス）
 	 * @param subject メールの件名
-	 * @param body    メールの本文（注文明細など）
+	 * @param body メールの本文（注文明細など）
 	 */
 	public void sendMail(String to, String subject, String body) {
 		try {

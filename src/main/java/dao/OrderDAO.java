@@ -1,10 +1,10 @@
 /*
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：OrderDAO.java
- * プログラムの説明：orderinfo購入データを新規登録するSQLを担当する。
- * 作成日：2026年5月20日
+ * プログラムの説明：orderinfo購入データを新規登録するSQLの実行を担当する。
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 package dao;
 
 import java.sql.Connection;
@@ -14,6 +14,9 @@ import java.sql.SQLException;
 
 import bean.Order;
 
+/**
+ * orderinfoテーブルへの購入情報の登録を行うDAOクラスです。
+ */
 public class OrderDAO {
    // DB情報をフィールド変数に定義
     private static String RDB_DRIVE = "com.mysql.cj.jdbc.Driver";
@@ -21,6 +24,11 @@ public class OrderDAO {
     private static String USER = "root";
     private static String PASSWD = "root123";
 
+    /**
+     * データベースへのコネクションを取得します。
+     * @return 確立されたデータベース接続
+     * @throws IllegalStateException JDBCドライバーのロードや接続に失敗した場合
+     */
     private static Connection getConnection() {
         try {
             Class.forName(RDB_DRIVE);
@@ -30,7 +38,12 @@ public class OrderDAO {
         }
     }
 
-   // 購入データをorderinfoテーブルに新規登録
+    /**
+     * 購入データをorderinfoテーブルに新規登録します。
+     *
+     * @param order 登録する購入情報
+     * @throws IllegalStateException データベースエラーが発生した場合
+     */
     public void insert(Order order) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -53,6 +66,12 @@ public class OrderDAO {
         }
     }
 
+    /**
+     * DBリソースをクローズします。
+     *
+     * @param con DB接続
+     * @param pstmt ステートメント
+     */
     private void closeResources(Connection con, PreparedStatement pstmt) {
         try {
             if (pstmt != null) pstmt.close();

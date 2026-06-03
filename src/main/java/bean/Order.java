@@ -2,16 +2,15 @@
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：Order.java
  * プログラムの説明：オーダー情報を保持するDTO（Data Transfer Object）クラス。
- * 作成日：2026年5月15日
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 
 package bean;
 
 /**
- * OrderのDTOクラス
- * データの受け渡し専用のクラス
- * */
+ * 注文情報を保持するDTOクラスです。
+ */
 public class Order {
 	
 	//注文Noを格納する変数
@@ -28,8 +27,10 @@ public class Order {
 
 	//購入日付を格納する変数
     private String date;
-    
-    //引数なしコンストラクタ
+
+    /**
+     * 引数なしコンストラクタです。
+     */
     public Order(){
     	this.orderno = 0;
         this.userid = null;
@@ -39,62 +40,62 @@ public class Order {
     }
 
     /**
-     * ordernoのゲッターメソッド
-     * @returnフィールド変数ordernoで管理された値を返す
+     * 注文番号を取得します。
+     * @return 注文番号
      */
     public int getOrderno() {return orderno;}
     
     /**
-     * ordernoのセッターメソッド
-     * @param フィールド変数ordernoで管理された値を返す
+     * 注文番号を設定します。
+     * @param orderno 注文番号
      */
    public void setOrderno(int orderno) {this.orderno = orderno;}
     
     /**
-     * useridのゲッターメソッド
-     * @returnフィールド変数useridで管理された値を返す
+     * ユーザーIDを取得します。
+     * @return ユーザーID
      */
     public String getUserid(){ return userid; }
     
     /**
-     * useridのセッターメソッド
-     * @param引数に受け取った値をフィールド変数useridに格納する
+     * ユーザーIDを設定します。
+     * @param userid ユーザーID
      */
     public void setUserid(String userid){ this.userid = userid; }
 
     /**
-     * isbnのゲッターメソッド
-     * @returnフィールド変数isbnで管理された値を返す
+     * ISBNを取得します。
+     * @return ISBN
      */
     public String getIsbn(){ return isbn; }
     
     /**
-     * isbnのセッターメソッド
-     * @param引数に受け取った値をフィールド変数isbnに格納する
+     * ISBNを設定します。
+     * @param isbn ISBN
      */
     public void setIsbn(String isbn){ this.isbn = isbn; }
    
     /**
-     * emailのゲッターメソッド
-     * @returnフィールド変数emailで管理された値を返す
+     * 数量を取得します。
+     * @return 数量
      */
     public int getQuantity(){ return quantity; }
     
     /**
-     * quantityのセッターメソッド
-     * @param 引数に受け取った値をフィールド変数quantityに格納する
+     * 数量を設定します。
+     * @param quantity 数量
      */
     public void setQuantity(int quantity){ this.quantity = quantity; }
     
     /**
-     * dateのゲッターメソッド
-     * @returnフィールド変数dateで管理された値を返す
+     * 購入日付を取得します。
+     * @return 購入日付
      */
     public String getDate(){ return date; }
     
     /**
-     * dateのセッターメソッド
-     * @param 引数に受け取った値をフィールド変数dateに格納する
+     * 購入日付を設定します。
+     * @param date 購入日付
      */
     public void setDate(String date){ this.date = date; }
 }

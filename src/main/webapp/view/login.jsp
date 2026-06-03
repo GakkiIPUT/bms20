@@ -2,9 +2,9 @@
  プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：login.jsp
  プログラムの説明：ログイン画面。
- 作成日：2026年5月18日
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
- --%>
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// エラーメッセージの受け取り

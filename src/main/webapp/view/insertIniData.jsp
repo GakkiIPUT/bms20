@@ -1,11 +1,10 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver3.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：insertIniData.jsp
- プログラムの説明：初期データを登録し、確認画面を表示する。
- 作成日：2026年5月18日
+ プログラムの説明：初期データ登録の実行画面。
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
-  --%>
-
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, bean.Book, util.MyFormat" %>
 <%@page import="bean.User"%>

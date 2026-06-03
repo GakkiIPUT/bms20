@@ -1,13 +1,16 @@
 /*
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：OrderedItem.java
- * プログラムの説明：オーダー情報を保持するDTO（Data Transfer Object）クラス。
- * 作成日：2026年5月15日
+ * プログラムの説明：注文済み商品情報を保持するDTO（Data Transfer Object）クラス。
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 
 package bean;
 
+/**
+ * 注文済み商品の情報を保持するDTOクラスです。
+ */
 public class OrderedItem {
 
 	//ユーザーIDを格納する変数
@@ -21,7 +24,9 @@ public class OrderedItem {
 	//購入日付を格納する変数
 	private String date;
 
-	//引数なしコンストラクタ
+	/**
+	 * 引数なしコンストラクタです。
+	 */
 	public OrderedItem() {
 		this.userid = null;
 		this.title = null;
@@ -30,64 +35,64 @@ public class OrderedItem {
 	}
 
 	/**
-	 * useridのゲッターメソッド
-	 * @returnフィールド変数useridで管理された値を返す
+	 * ユーザーIDを取得します。
+	 * @return ユーザーID
 	 */
 	public String getUserid() {
 		return userid;
 	}
 
 	/**
-	 * useridのセッターメソッド
-	 * @param引数に受け取った値をフィールド変数useridに格納する
+	 * ユーザーIDを設定します。
+	 * @param userid ユーザーID
 	 */
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
 	/**
-	 * titleのゲッターメソッド
-	 * @returnフィールド変数titleで管理された値を返す
+	 * タイトルを取得します。
+	 * @return タイトル
 	 */
 	public String getTitle() {
 		return title;
 	}
 
 	/**
-	 * titleのセッターメソッド
-	 * @param引数に受け取った値をフィールド変数titleに格納する
+	 * タイトルを設定します。
+	 * @param title タイトル
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	
 	/**
-	 * quantityのゲッターメソッド
-	 * @returnフィールド変数quantityで管理された値を返す
+	 * 数量を取得します。
+	 * @return 数量
 	 */
 	public int getQuantity() {
 		return quantity;
 	}
 	
 	/**
-	 * quantityのセッターメソッド
-	 * @param引数に受け取った値をフィールド変数quantityに格納する
+	 * 数量を設定します。
+	 * @param quantity 数量
 	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
 	/**
-	 * dateのゲッターメソッド
-	 * @returnフィールド変数dateで管理された値を返す
+	 * 購入日付を取得します。
+	 * @return 購入日付
 	 */
 	public String getDate() {
 		return date;
 	}
 
 	/**
-	 * dateのセッターメソッド
-	 * @param 引数に受け取った値をフィールド変数dateに格納する
+	 * 購入日付を設定します。
+	 * @param date 購入日付
 	 */
 	public void setDate(String date) {
 		this.date = date;

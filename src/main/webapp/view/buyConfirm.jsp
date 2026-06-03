@@ -1,10 +1,10 @@
 <%--
-プロジェクト名：書籍管理システムWeb版Ver3.0
+ プロジェクト名：書籍管理システムWeb版Ver3.0
  プログラム名：buyConfirm.jsp
- プログラムの説明：購入確認画面。購入した書籍の確認情報を表示する。
- 作成日：2026年5月18日
+ プログラムの説明：購入内容の確認画面。
+ 作成日：2026年6月3日
  作成者：髙垣湧侑翔
-  --%>
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page

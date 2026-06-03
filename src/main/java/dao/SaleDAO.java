@@ -1,3 +1,11 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
+ * プログラム名：SaleDAO.java
+ * プログラムの説明：売上集計情報を取得するSQLの実行を担当する。
+ * 作成日：2026年6月3日
+ * 作成者：髙垣湧侑翔
+ */
+
 package dao;
 
 import java.sql.Connection;
@@ -9,12 +17,20 @@ import java.util.ArrayList;
 
 import bean.Sale;
 
+/**
+ * 売上集計情報を取得するDAOクラスです。
+ */
 public class SaleDAO {
 	private static String RDB_DRIVE = "com.mysql.cj.jdbc.Driver";
 	private static String URL = "jdbc:mysql://localhost/mybookdb";
 	private static String USER = "root";
 	private static String PASSWD = "root123";
 
+	/**
+	 * データベースへのコネクションを取得します。
+	 * @return 確立されたデータベース接続
+	 * @throws IllegalStateException JDBCドライバーのロードや接続に失敗した場合
+	 */
 	private static Connection getConnection() {
 		try {
 			Class.forName(RDB_DRIVE);
@@ -24,6 +40,14 @@ public class SaleDAO {
 		}
 	}
 
+	/**
+	 * 指定された年月の売上情報を取得します。
+	 *
+	 * @param year 集計対象の年
+	 * @param month 集計対象の月
+	 * @return 売上集計の一覧
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public ArrayList<Sale> selectBySales(String year, String month) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -68,7 +92,14 @@ public class SaleDAO {
 		return saleList;
 	}
 	
-	// 指定された年月の売上げを集計して取得するメソッド
+	/**
+	 * 指定された年月の売上を集計して取得します。
+	 *
+	 * @param year 集計対象の年
+	 * @param month 集計対象の月
+	 * @return 売上集計の一覧
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
     public ArrayList<Sale> selectByYearMonth(String year, String month) {
         Connection con = null;
         PreparedStatement pstmt = null;

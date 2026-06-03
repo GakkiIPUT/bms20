@@ -1,11 +1,10 @@
 /*
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：OrderedItemDAO.java
- * プログラムの説明：bookinfo テーブルと orderinfo テーブルを結合して、注文済み商品の情報を取得します。
- * 					userid、title、date を含む OrderedItem DTO のリストを返します。
- * 作成日：2026年5月20日
+ * プログラムの説明：bookinfoテーブルとorderinfoテーブルを結合し、注文済み商品情報を取得する。
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 package dao;
 
 import java.sql.Connection;
@@ -17,6 +16,9 @@ import java.util.ArrayList;
 
 import bean.OrderedItem;
 
+/**
+ * 注文済み商品の情報を取得するDAOクラスです。
+ */
 public class OrderedItemDAO {
 	// DB情報をフィールド変数に定義
 	private static String RDB_DRIVE = "com.mysql.cj.jdbc.Driver";
@@ -24,6 +26,11 @@ public class OrderedItemDAO {
 	private static String USER = "root";
 	private static String PASSWD = "root123";
 
+	/**
+	 * データベースへのコネクションを取得します。
+	 * @return 確立されたデータベース接続
+	 * @throws IllegalStateException JDBCドライバーのロードや接続に失敗した場合
+	 */
 	private static Connection getConnection() {
 		try {
 			Class.forName(RDB_DRIVE);
@@ -33,7 +40,12 @@ public class OrderedItemDAO {
 		}
 	}
 
-	// 購入情報を取得 (テーブル結合)
+	/**
+	 * bookinfoとorderinfoを結合して購入情報を取得します。
+	 *
+	 * @return 注文済み商品の一覧
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public ArrayList<OrderedItem> selectAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -64,9 +76,11 @@ public class OrderedItemDAO {
 	}
 
 	/**
-	 * 
-	 * @param userid
-	 * @return
+	 * useridを指定して注文済み商品を取得します。
+	 *
+	 * @param userid 検索対象のユーザーID
+	 * @return 該当ユーザーの注文済み商品一覧
+	 * @throws IllegalStateException データベースエラーが発生した場合
 	 */
 	public ArrayList<OrderedItem> selectByUser(String userid) {
 		Connection con = null;
@@ -106,6 +120,12 @@ public class OrderedItemDAO {
 		return list;
 	}
 
+	/**
+	 * DBリソースをクローズします。
+	 *
+	 * @param con DB接続
+	 * @param pstmt ステートメント
+	 */
 	private void closeResources(Connection con, PreparedStatement pstmt) {
 		try {
 			if (pstmt != null)

@@ -2,9 +2,9 @@
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：ListServlet.java
  * プログラムの説明：書籍一覧の取得および画面表示を制御するサーブレットクラス。
- * 作成日：2026年5月20日
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 
 package servlet;
 
@@ -27,6 +27,14 @@ import dao.BookDAO;
 @WebServlet("/list")
 public class ListServlet extends HttpServlet {
 
+	/**
+	 * 書籍一覧を取得して一覧画面へフォワードします。
+	 *
+	 * @param request HTTPリクエスト
+	 * @param response HTTPレスポンス
+	 * @throws ServletException サーブレット例外が発生した場合
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 制御用の変数を初期化

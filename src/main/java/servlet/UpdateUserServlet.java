@@ -1,3 +1,11 @@
+/*
+ * プロジェクト名：書籍管理システムWeb版Ver3.0
+ * プログラム名：UpdateUserServlet.java
+ * プログラムの説明：ユーザー情報の更新処理を制御するサーブレットクラス。
+ * 作成日：2026年6月3日
+ * 作成者：髙垣湧侑翔
+ */
+
 package servlet;
 
 import java.io.IOException;
@@ -11,8 +19,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import bean.User;
 import dao.UserDAO;
 
+/**
+ * ユーザー情報の更新処理を制御するサーブレットクラスです。
+ */
 @WebServlet("/updateUser")
 public class UpdateUserServlet extends HttpServlet {
+	/**
+	 * ユーザー情報の更新処理を実行し、結果画面へフォワードします。
+	 *
+	 * @param request HTTPリクエスト
+	 * @param response HTTPレスポンス
+	 * @throws ServletException サーブレット例外が発生した場合
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String error = "";

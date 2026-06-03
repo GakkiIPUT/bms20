@@ -3,7 +3,7 @@
  * プログラム名：UserDAO.java
  * プログラムの説明：DB接続とuserinfoテーブルに対するユーザー情報の取得や
  * 					パスワードに合致する情報を取得するSQL実行を担当する。
- * 作成日：2026年5月15日
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
 */
 
@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import bean.User;
 
 /**
+ * userinfoテーブルに対するユーザー情報の取得・更新・削除を行うDAOクラスです。
+ * DB接続の確立と各SQLの実行を担当します。
  */
 public class UserDAO {
 
@@ -47,9 +49,9 @@ public class UserDAO {
 	/**
 	 * userid に基づいてユーザーを選択します。
 	 *
-	 * @param userid 検索対象のユーザー ID
-	 * @return ユーザーが見つかった場合は User DTO、見つからない場合は null
-	 * @throws データベースエラーが発生した場合は IllegalStateException をスローします
+	 * @param userid 検索対象のユーザーID
+	 * @return ユーザーが見つかった場合はUser DTO、見つからない場合はnull
+	 * @throws IllegalStateException データベースエラーが発生した場合
 	 */
 	public User selectByUser(String userid) {
 		Connection con = null;
@@ -82,10 +84,10 @@ public class UserDAO {
 	/**
 	 * ユーザーIDとパスワードに基づいてユーザーを選択します（認証に使用されます）。
 	 *
-	 * @param userid   検索するユーザーID
+	 * @param userid 検索するユーザーID
 	 * @param password 照合するパスワード
-	 * @return 認証情報が一致した場合、User DTOを返します。一致しない場合はnullを返します。
-	 * @throws データベースエラーが発生した場合、IllegalStateExceptionをスローします
+	 * @return 認証情報が一致した場合はUser DTO、一致しない場合はnull
+	 * @throws IllegalStateException データベースエラーが発生した場合
 	 */
 	public User selectByUser(String userid, String password) {
 		Connection con = null;
@@ -116,6 +118,12 @@ public class UserDAO {
 		return user;
 	}
 
+	/**
+	 * userinfoテーブルに存在する全ユーザーを取得します。
+	 *
+	 * @return 全ユーザー情報のリスト
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public java.util.ArrayList<User> selectAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -141,6 +149,13 @@ public class UserDAO {
 		return userList;
 	}
 
+	/**
+	 * 指定したユーザー情報をuserinfoテーブルへ登録します。
+	 *
+	 * @param user 登録するユーザー情報
+	 * @return 登録件数
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public int insert(User user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -162,6 +177,13 @@ public class UserDAO {
 		return count;
 	}
 
+	/**
+	 * userid を指定してユーザー情報を削除します。
+	 *
+	 * @param userid 削除対象のユーザーID
+	 * @return 削除件数
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public int delete(String userid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -180,6 +202,13 @@ public class UserDAO {
 		return count;
 	}
 
+	/**
+	 * ユーザー情報（パスワード・メール・権限）を更新します。
+	 *
+	 * @param user 更新対象のユーザー情報
+	 * @return 更新件数
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public int update(User user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -201,6 +230,13 @@ public class UserDAO {
 		return count;
 	}
 
+	/**
+	 * userid の部分一致でユーザーを検索します。
+	 *
+	 * @param userid 検索キーワードとなるユーザーID
+	 * @return 検索条件に一致したユーザー情報のリスト
+	 * @throws IllegalStateException データベースエラーが発生した場合
+	 */
 	public java.util.ArrayList<User> search(String userid) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -229,6 +265,11 @@ public class UserDAO {
 
 	/**
 	 * ユーザーのパスワードを更新します。
+	 *
+	 * @param userid 更新対象のユーザーID
+	 * @param password 新しいパスワード
+	 * @return 更新件数
+	 * @throws IllegalStateException データベースエラーが発生した場合
 	 */
 	public int updateForPassword(String userid, String password) {
 		Connection con = null;
@@ -249,6 +290,12 @@ public class UserDAO {
 		return count;
 	}
 
+	/**
+	 * DBリソースをクローズします。
+	 *
+	 * @param con DB接続
+	 * @param pstmt ステートメント
+	 */
 	private void closeResources(Connection con, PreparedStatement pstmt) {
 		try {
 			if (pstmt != null)

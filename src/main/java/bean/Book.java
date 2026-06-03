@@ -2,17 +2,16 @@
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：Book.java
  * プログラムの説明：書籍情報を保持するDTO（Data Transfer Object）クラス。
- * 作成日：2026年5月8日
+ * 作成日：2026年6月3日
  * 作成者：髙垣湧侑翔
-*/
+ */
 
 package bean;
 
 
 /**
- * DTOクラス
- * データの受け渡し専用のクラス
- * */
+ * 書籍情報を保持するDTOクラスです。
+ */
 public class Book {
 	
 	//書籍番号を格納する変数
@@ -24,46 +23,48 @@ public class Book {
 	//価格を格納する変数
     private int price;
 
-    //引数なしコンストラクタ
-    public Book(){
+      /**
+       * 引数なしコンストラクタです。
+       */
+      public Book(){
         this.isbn = null;
         this.title = null;
         this.price = 0;
     }
 
-    /**
-     * isbnのゲッターメソッド
-     * @returnフィールド変数isbnで管理された値を返す
-     */
+      /**
+       * ISBNを取得します。
+       * @return ISBN
+       */
     public String getIsbn(){ return isbn; }
     
-    /**
-     * isbnのセッターメソッド
-     * @param引数に受け取った値をフィールド変数isbnに格納する
-     */
+      /**
+       * ISBNを設定します。
+       * @param isbn ISBN
+       */
     public void setIsbn(String isbn){ this.isbn = isbn; }
 
-    /**
-     * titleのゲッターメソッド
-     * @returnフィールド変数titleで管理された値を返す
-     */
+      /**
+       * タイトルを取得します。
+       * @return タイトル
+       */
     public String getTitle(){ return title; }
     
-    /**
-     * titleのセッターメソッド
-     * @param 引数に受け取った値をフィールド変数titleに格納する
-     */
+      /**
+       * タイトルを設定します。
+       * @param title タイトル
+       */
     public void setTitle(String title){ this.title = title; }
 
-    /**
-     * priceのゲッターメソッド
-     * @returnフィールド変数priceで管理された値を返す
-     */
+      /**
+       * 価格を取得します。
+       * @return 価格
+       */
     public int getPrice(){ return price; }
     
-    /**
-     * priceのセッターメソッド
-     * @param 引数に受け取った値をフィールド変数priceに格納する
-     */
+      /**
+       * 価格を設定します。
+       * @param price 価格
+       */
     public void setPrice(int price){ this.price = price; }
 }
