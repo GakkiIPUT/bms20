@@ -19,9 +19,10 @@ if (user == null) {
 	return;
 }
 %>
-<%@ page import="java.util.ArrayList, bean.Book, util.MyFormat"%>
+<%@ page import="java.util.ArrayList, bean.Sale, util.MyFormat"%>
 <%
-ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
+// ShowCartServletから渡される型を Book から Sale に変更
+ArrayList<Sale> list = (ArrayList<Sale>) request.getAttribute("book_list");
 MyFormat mf = new MyFormat();
 int total = 0;
 %>
@@ -50,19 +51,22 @@ int total = 0;
 			<th class="header-color">ISBN</th>
 			<th class="header-color">TITLE</th>
 			<th class="header-color">価格</th>
+			<th class="header-color">購入数</th>
 			<th class="header-color">削除</th>
 		</tr>
 		<%
 		if (list != null && list.size() > 0) {
 			for (int i = 0; i < list.size(); i++) {
-				Book b = list.get(i);
-				total += b.getPrice();
+				Sale b = list.get(i);
+				// 合計金額の計算（単価 × 購入数）
+				total += b.getPrice() * b.getQuantity();
 		%>
 		<tr>
 			<td align="center"><a
 				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=detail"><%=b.getIsbn()%></a></td>
 			<td><%=b.getTitle()%></td>
 			<td align="right"><%=mf.moneyFormat(b.getPrice())%></td>
+			<td align="center"><%=b.getQuantity()%></td>
 			<td align="center"><a
 				href="<%=request.getContextPath()%>/showCart?delno=<%=i%>">削除</a></td>
 		</tr>
@@ -71,7 +75,7 @@ int total = 0;
 		} else {
 		%>
 		<tr>
-			<td colspan="4" align="center">カートに商品は入っていません。</td>
+			<td colspan="5" align="center">カートに商品は入っていません。</td>
 		</tr>
 		<%
 		}

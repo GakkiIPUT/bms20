@@ -26,12 +26,12 @@ import dao.BookDAO;
 /**
  * セッション内のカートに書籍を追加します。
  * セッションの有効性を確認し、ISBN で書籍を取得して 
- * session の order_list を更新します。
+ * session の order_list を更新します。（同一商品の場合は数量を加算）
  */
 @WebServlet("/insertIntoCart")
 public class InsertIntoCartServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -40,7 +40,7 @@ public class InsertIntoCartServlet extends HttpServlet {
 		String path = "/view/insertIntoCart.jsp";
 		String error = null;
 		String cmd = "logout";
-		
+
 		try {
 			// セッションから"user"のUserオブジェクトを取得する(セッション切れチェック)
 			User user = (User) session.getAttribute("user");
@@ -51,8 +51,15 @@ public class InsertIntoCartServlet extends HttpServlet {
 				return;
 			}
 
-			// isbnのパラメータを取得する
+			// isbnとquantityのパラメータを取得する
 			String isbn = request.getParameter("isbn");
+			String quantityStr = request.getParameter("quantity");
+
+			// 数量が未入力などの場合はとりあえず1とする
+			int quantity = 1;
+			if (quantityStr != null && !quantityStr.isEmpty()) {
+				quantity = Integer.parseInt(quantityStr);
+			}
 
 			// BookDAOをインスタンス化し、該当書籍を検索する
 			BookDAO bookDao = new BookDAO();
@@ -60,12 +67,8 @@ public class InsertIntoCartServlet extends HttpServlet {
 
 			// 取得したBookオブジェクトをリクエストスコープに格納
 			request.setAttribute("book", book);
-
-			// Orderのインスタンスを生成し、値を設定する(数量は1固定)
-			Order order = new Order();
-			order.setIsbn(isbn);
-			order.setUserid(user.getUserid());
-			order.setQuantity(1);
+			// 画面に表示するために、取得した「数量」もリクエストスコープに格納
+			request.setAttribute("quantity", quantity);
 
 			// セッションから"order_list"を取得する。なければ新規作成
 			ArrayList<Order> orderList = (ArrayList<Order>) session.getAttribute("order_list");
@@ -73,10 +76,29 @@ public class InsertIntoCartServlet extends HttpServlet {
 				orderList = new ArrayList<Order>();
 			}
 
-			// OrderオブジェクトをListに追加し、セッションに再登録
-			orderList.add(order);
+			// カート内に既に同じISBNが存在するかチェック
+			boolean isExist = false;
+			for (Order o : orderList) {
+				if (o.getIsbn().equals(isbn)) {
+					// 存在する場合は数量を加算
+					o.setQuantity(o.getQuantity() + quantity);
+					isExist = true;
+					break;
+				}
+			}
+
+			// 存在しなかった場合のみ、新規でOrderオブジェクトを作成してリストに追加
+			if (!isExist) {
+				Order order = new Order();
+				order.setIsbn(isbn);
+				order.setUserid(user.getUserid());
+				order.setQuantity(quantity);
+				orderList.add(order);
+			}
+
+			// セッションに再登録
 			session.setAttribute("order_list", orderList);
-			
+
 		} catch (Exception e) {
 			path = "/view/error.jsp";
 			error = "DB接続エラーの為、カートに追加は出来ません。";

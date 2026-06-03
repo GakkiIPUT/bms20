@@ -11,7 +11,6 @@
 <%@ page import="bean.Book, util.MyFormat"%>
 <%@page import="bean.User"%>
 <%
-// 仕様書通りのセッションチェック記述例
 User user = (User) session.getAttribute("user");
 if (user == null) {
 	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
@@ -22,6 +21,11 @@ if (user == null) {
 %>
 <%
 Book book = (Book) request.getAttribute("book");
+// Servletから送られてきた数量(quantity)を受け取る
+Integer quantity = (Integer) request.getAttribute("quantity");
+if(quantity == null) {
+	quantity = 1; // 万が一のための保険
+}
 MyFormat mf = new MyFormat();
 %>
 <!DOCTYPE html>
@@ -56,13 +60,17 @@ MyFormat mf = new MyFormat();
 			<td class="header-color">価格</td>
 			<td><%=mf.moneyFormat(book.getPrice())%></td>
 		</tr>
+		<tr>
+			<td class="header-color">購入数</td>
+			<td><%=quantity%></td>
+		</tr>
 	</table>
 
-	<div align="center" class="form-padding-top">
-		<form action="<%=request.getContextPath()%>/showCart">
+	<form action="<%=request.getContextPath()%>/showCart" method="get">
+		<div align="center" class="form-padding-top">
 			<input type="submit" value="カート確認">
-		</form>
-	</div>
+		</div>
+	</form>
 
 	<%@ include file="/common/footer.jsp"%>
 </body>

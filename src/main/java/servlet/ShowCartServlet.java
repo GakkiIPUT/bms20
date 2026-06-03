@@ -19,13 +19,14 @@ import jakarta.servlet.http.HttpSession;
 
 import bean.Book;
 import bean.Order;
+import bean.Sale;
 import bean.User;
 import dao.BookDAO;
 
 /**
  * 現在のユーザーのカートを表示します。
  * セッションの確認、アイテムの削除処理、
- * 各アイテムの書籍情報取得を行い、showCart.jsp にフォワードします。
+ * 各アイテムの書籍情報と数量を取得し、showCart.jsp にフォワードします。
  * エラー発生時は error.jsp にフォワードします。
  */
 @WebServlet("/showCart")
@@ -64,18 +65,27 @@ public class ShowCartServlet extends HttpServlet {
 
 			// BookDAO をインスタンス化し、関連メソッドを order_list (カートデータ分) だけ呼び出す。
 			BookDAO bookDao = new BookDAO();
-			ArrayList<Book> bookList = new ArrayList<Book>();
+			
+			// 数量情報を保持できるSaleクラスのリストに変更
+			ArrayList<Sale> saleList = new ArrayList<Sale>();
 
 			if (orderList != null) {
 				for (Order order : orderList) {
 					Book book = bookDao.selectByIsbn(order.getIsbn());
-					// 取得した各BookをListに追加する。
-					bookList.add(book);
+					
+					// Saleオブジェクトに書籍情報と注文数量をセットする
+					Sale sale = new Sale();
+					sale.setIsbn(book.getIsbn());
+					sale.setTitle(book.getTitle());
+					sale.setPrice(book.getPrice());
+					sale.setQuantity(order.getQuantity());
+					
+					saleList.add(sale);
 				}
 			}
 
 			// リクエストスコープに "book_list" という名前で格納する。
-			request.setAttribute("book_list", bookList);
+			request.setAttribute("book_list", saleList);
 
 		} catch (Exception e) {
 			path = "/view/error.jsp";

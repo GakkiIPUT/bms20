@@ -1,7 +1,7 @@
 /*
  * プロジェクト名：書籍管理システムWeb版Ver3.0
  * プログラム名：BuyConfirmServlet.java
- * プログラムの説明：
+ * プログラムの説明：購入確定とメール送信を行うサーブレットクラス。
  * 作成日：2026年5月20日
  * 作成者：髙垣湧侑翔
 */
@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 import bean.Book;
 import bean.Order;
+import bean.Sale;
 import bean.User;
 import dao.BookDAO;
 import dao.OrderDAO;
@@ -65,7 +66,9 @@ public class BuyConfirmServlet extends HttpServlet {
 			// DAOのインスタンス化
 			BookDAO bookDao = new BookDAO();
 			OrderDAO orderDao = new OrderDAO();
-			ArrayList<Book> bookList = new ArrayList<Book>();
+			
+			// 購入確定処理の実装
+			ArrayList<Sale> saleList = new ArrayList<Sale>();
 
 			// メール本文の土台を構築
 			StringBuilder mailBody = new StringBuilder();
@@ -84,24 +87,31 @@ public class BuyConfirmServlet extends HttpServlet {
 				// 購入情報の登録
 				orderDao.insert(order);
 
-				// 取得した各BookをListに追加する
-				bookList.add(book);
-
-				// ループ中にメール明細本文を追加する
+				// Saleオブジェクトに書籍情報と「数量」を詰め替える
+				Sale sale = new Sale();
+				sale.setIsbn(book.getIsbn());
+				sale.setTitle(book.getTitle());
+				sale.setPrice(book.getPrice());
+				sale.setQuantity(order.getQuantity()); // 数量をセット
+				saleList.add(sale);
+				
+				// ループ中にメール明細本文を追加する（単価と数量を記載）
 				mailBody.append(book.getIsbn()).append(" ")
 						.append(book.getTitle()).append(" ")
-						.append(book.getPrice()).append("円\n");
+						.append(book.getPrice()).append("円 × ")
+						.append(order.getQuantity()).append("\n");
 
-				total += book.getPrice();
+				// 単価 × 数量 で合計金額を計算
+				total += book.getPrice() * order.getQuantity();
 
 			}
 
 			// メールのフッター部分（合計金額など）を結合
-			mailBody.append("\n合計 }").append(total).append("円\n");
+			mailBody.append("\n合計：").append(total).append("円\n");
 			mailBody.append("またのご利用よろしくお願いします。");
 
 			// リクエストスコープに"book_list"という名前で格納する。
-			request.setAttribute("book_list", bookList);
+			request.setAttribute("book_list", saleList);
 
 			// "order_list"の注文情報内容をメール送信する。
 			SendMail sendMail = new SendMail();

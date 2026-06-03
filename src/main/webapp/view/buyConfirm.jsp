@@ -7,8 +7,8 @@
   --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, bean.Book, util.MyFormat"%>
-<%@page import="bean.User"%>
+<%@ page
+	import="java.util.ArrayList, bean.Sale, bean.User, util.MyFormat"%>
 <%
 User user = (User) session.getAttribute("user");
 if (user == null) {
@@ -19,7 +19,7 @@ if (user == null) {
 }
 %>
 <%
-ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("book_list");
+ArrayList<Sale> list = (ArrayList<Sale>) request.getAttribute("book_list");
 MyFormat mf = new MyFormat();
 int total = 0;
 %>
@@ -50,27 +50,31 @@ int total = 0;
 			<th>ISBN</th>
 			<th>TITLE</th>
 			<th>価格</th>
+			<th>購入数</th>
 		</tr>
 		<%
 		if (list != null) {
-			for (Book b : list) {
-				total += b.getPrice();
+			for (Sale s : list) {
+				total += s.getPrice() * s.getQuantity();
 		%>
 		<tr>
-			<td align="center"><%=b.getIsbn()%></td>
-			<td align="center"><%=b.getTitle()%></td>
-			<td align="center"><%=mf.moneyFormat(b.getPrice())%></td>
+			<td align="center"><%=s.getIsbn()%></td>
+			<td><%=s.getTitle()%></td>
+			<td align="right"><%=mf.moneyFormat(s.getPrice())%></td>
+			<td align="center"><%=s.getQuantity()%></td>
 		</tr>
 		<%
-		}
+			}
 		}
 		%>
 	</table>
+
 	<hr
 		style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
-	<table align="right" style="width: 43%">
+	<table align="center" style="width: 50%;">
 		<tr>
-			<td class="header-color">合計</td>
+			<td></td>
+			<td align="right" class="header-color">合計</td>
 			<td align="left"><%=mf.moneyFormat(total)%></td>
 		</tr>
 	</table>

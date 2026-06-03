@@ -76,7 +76,7 @@ public class UserDAO {
 		} finally {
 			closeResources(con, pstmt);
 		}
-		return null;
+		return user;
 	}
 
 	/**

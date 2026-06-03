@@ -36,7 +36,7 @@ public class ListUserServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 				return;
 			}
-			
+
 			// 管理者権限チェック (2: 管理者)
 			if (!"2".equals(user.getAuthority())) {
 				request.setAttribute("error", "管理者権限がない為、ユーザー一覧表示は行えませんでした。");
@@ -68,5 +68,11 @@ public class ListUserServlet extends HttpServlet {
 			}
 			request.getRequestDispatcher(path).forward(request, response);
 		}
+	}
+
+	// 登録処理などからフォワード（POST）されてきたときの処理
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// POSTで送られてきても、上で書いたdoGetと同じ処理を実行させる
+		doGet(request, response);
 	}
 }

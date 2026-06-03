@@ -41,8 +41,8 @@
     <form action="<%=request.getContextPath()%>/showSalesByMonth" method="get">
         <table align="center" style="margin-top: 15px;">
             <tr>
-                <td>年 <input type="text" name="year" value="<%= year != null ? year : "" %>" size="5"></td>
-                <td>月 <input type="text" name="month" value="<%= month != null ? month : "" %>" size="5"></td>
+                <td><input type="text" name="year" value="<%= year != null ? year : "" %>" size="5">年 </td>
+                <td><input type="text" name="month" value="<%= month != null ? month : "" %>" size="5">月 </td>
                 <td><input type="submit" value="検索"></td>
             </tr>
         </table>
