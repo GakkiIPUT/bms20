@@ -25,7 +25,7 @@ String cmd = (String) request.getAttribute("cmd");
 	<br>
 
 	<p align="center">
-		<%
+<%
 		if ("menu".equals(cmd)) {
 		%>
 		<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニューに戻る]</a>
@@ -33,6 +33,10 @@ String cmd = (String) request.getAttribute("cmd");
 		} else if ("logout".equals(cmd)) {
 		%>
 		<a href="<%=request.getContextPath()%>/logout">[ログイン画面へ]</a>
+		<%
+		} else if ("user".equals(cmd)) {
+		%>
+		<a href="<%=request.getContextPath()%>/listUser">[ユーザー一覧に戻る]</a>
 		<%
 		} else {
 		%>

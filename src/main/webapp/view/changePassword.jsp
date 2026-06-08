@@ -22,7 +22,7 @@
 <head>
 <title>パスワード変更</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/CSS/style.css">
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
 <%@ include file="../common/header.jsp"%>

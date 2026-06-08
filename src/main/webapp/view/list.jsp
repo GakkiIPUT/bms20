@@ -73,22 +73,22 @@ MyFormat format = new MyFormat();
 			for (Book b : list) {
 		%>
 		<tr>
-			<td><a
-				href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=detail"><%=b.getIsbn()%></a></td>
-			<td><%=b.getTitle()%></td>
-			<td><%=format.moneyFormat(b.getPrice())%></td>
-			<td>
-				<a href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
-				<b>&emsp;&emsp;</b>
-				<a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
-				<b>&emsp;&emsp;</b>
-				<form action="<%=request.getContextPath()%>/insertIntoCart" method="get" style="display:inline; margin:0; padding:0;">
-					<input type="hidden" name="isbn" value="<%=b.getIsbn()%>">
-					<input type="text" name="quantity" size="3" value="1">
-					<input type="submit" value="カートに入れる">
-				</form>
-			</td>
-		</tr>
+            <td><a
+                href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=detail"><%=b.getIsbn()%></a></td>
+            <td><%=b.getTitle()%></td>
+            <td><%=format.moneyFormat(b.getPrice())%></td>
+            <td>
+                <div class="action-cell" style="display:flex; align-items:center; gap:12px; flex-wrap:nowrap; white-space:nowrap;">
+                    <a href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
+                    <a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
+                    <form action="<%=request.getContextPath()%>/insertIntoCart" method="get" style="display:flex; align-items:center; gap:6px; margin:0; padding:0;">
+                        <input type="hidden" name="isbn" value="<%=b.getIsbn()%>">
+                        <input type="text" name="quantity" size="3" value="1">
+                        <input type="submit" value="カートに入れる">
+                    </form>
+                </div>
+            </td>
+        </tr>
 		<%
 		}
 		}

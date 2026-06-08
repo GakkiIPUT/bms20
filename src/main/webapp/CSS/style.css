@@ -53,7 +53,7 @@ header hr {
 
 /* 共通フッター（footer.jsp用）の位置固定 */
 footer {
-	position: fixed;
+	position: sticky;
 	bottom: 60px;
 	width: 100%;
 	background-color: #FFFFFF;
