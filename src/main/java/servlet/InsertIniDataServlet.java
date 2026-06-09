@@ -95,6 +95,9 @@ public class InsertIniDataServlet extends HttpServlet {
 			path = "/view/error.jsp";
 			cmd = "menu";
 			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

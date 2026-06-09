@@ -57,7 +57,7 @@ public class BookDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
-		String sql = "SELECT isbn, title, price FROM bookinfo ORDER BY isbn";
+		String sql = "SELECT isbn, title, price ,image FROM bookinfo ORDER BY isbn";
 		try {
 			// DB接続を取得
 			con = getConnection();
@@ -70,6 +70,7 @@ public class BookDAO {
 				book.setIsbn(rs.getString("isbn"));
 				book.setTitle(rs.getString("title"));
 				book.setPrice(rs.getInt("price"));
+				book.setImage(rs.getString("image")); 
 				bookList.add(book);
 			}
 		} catch (SQLException e) {
@@ -99,7 +100,7 @@ public class BookDAO {
 	public void insert(Book book) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO bookinfo VALUES(?,?,?)";
+		String sql = "INSERT INTO bookinfo VALUES(?,?,?,?)";
 		try {
 			// DB接続を取得
 			con = getConnection();
@@ -109,7 +110,8 @@ public class BookDAO {
 			pstmt.setString(1, book.getIsbn());
 			pstmt.setString(2, book.getTitle());
 			pstmt.setInt(3, book.getPrice());
-
+			pstmt.setString(4, book.getImage()); 
+			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// SQL実行時にエラーが発生した場合
@@ -142,7 +144,7 @@ public class BookDAO {
 		PreparedStatement pstmt = null;
 		// 戻り値用のBookインスタンスを生成（初期状態）
 		Book book = new Book();
-		String sql = "SELECT isbn, title, price FROM bookinfo WHERE isbn = ?";
+		String sql = "SELECT isbn, title, price , image FROM bookinfo WHERE isbn = ?";
 		try {
 			// DB接続を取得
 			con = getConnection();
@@ -158,6 +160,7 @@ public class BookDAO {
 				book.setIsbn(rs.getString("isbn"));
 				book.setTitle(rs.getString("title"));
 				book.setPrice(rs.getInt("price"));
+				book.setImage(rs.getString("image"));
 			}
 		} catch (SQLException e) {
 			// SQL実行時にエラーが発生した場合
@@ -226,7 +229,7 @@ public class BookDAO {
 	public void update(Book book) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE bookinfo SET title= ?, price=?  WHERE isbn=?";
+		String sql = "UPDATE bookinfo SET title= ?, price=? ,image=? WHERE isbn=?";
 		try {
 			// DB接続を取得
 			con = getConnection();
@@ -234,7 +237,8 @@ public class BookDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, book.getTitle());
 			pstmt.setInt(2, book.getPrice());
-			pstmt.setString(3, book.getIsbn());
+			pstmt.setString(3, book.getImage());
+			pstmt.setString(4, book.getIsbn());
 
 			pstmt.executeUpdate();
 
@@ -270,7 +274,7 @@ public class BookDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;// 戻り値として返すためのArrayListを初期化
 		ArrayList<Book> bookList = new ArrayList<Book>();
-		String sql = "SELECT isbn, title, price FROM bookinfo"
+		String sql = "SELECT isbn, title, price , image FROM bookinfo"
 				+ " WHERE isbn LIKE ?  AND title LIKE ?"
 				+ " AND price LIKE ?";
 		

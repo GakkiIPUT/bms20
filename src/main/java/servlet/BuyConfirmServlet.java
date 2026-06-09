@@ -32,12 +32,12 @@ import util.SendMail;
  */
 @WebServlet("/buyConfirm")
 public class BuyConfirmServlet extends HttpServlet {
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		
+
 		// 制御用の変数を初期化
 		String path = "/view/buyConfirm.jsp";
 		String error = null;
@@ -66,7 +66,7 @@ public class BuyConfirmServlet extends HttpServlet {
 			// DAOのインスタンス化
 			BookDAO bookDao = new BookDAO();
 			OrderDAO orderDao = new OrderDAO();
-			
+
 			// 購入確定処理の実装
 			ArrayList<Sale> saleList = new ArrayList<Sale>();
 
@@ -94,7 +94,7 @@ public class BuyConfirmServlet extends HttpServlet {
 				sale.setPrice(book.getPrice());
 				sale.setQuantity(order.getQuantity()); // 数量をセット
 				saleList.add(sale);
-				
+
 				// ループ中にメール明細本文を追加する（単価と数量を記載）
 				mailBody.append(book.getIsbn()).append(" ")
 						.append(book.getTitle()).append(" ")
@@ -120,11 +120,14 @@ public class BuyConfirmServlet extends HttpServlet {
 			// セッションの"order_list"情報をクリアする。
 			session.setAttribute("order_list", null);
 
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 			path = "/view/error.jsp";
 			error = "DB接続エラーの為、購入は出来ません。";
 			cmd = "logout";
 			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

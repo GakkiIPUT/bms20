@@ -107,11 +107,14 @@ public class InsertIntoCartServlet extends HttpServlet {
 			// セッションに再登録
 			session.setAttribute("order_list", orderList);
 
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 			path = "/view/error.jsp";
 			error = "DB接続エラーの為、カートに追加は出来ません。";
 			cmd = "logout";
 			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

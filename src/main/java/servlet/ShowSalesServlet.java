@@ -39,7 +39,10 @@ public class ShowSalesServlet extends HttpServlet {
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、売上げ状況は表示出来ません。";
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (!error.isEmpty()) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", "logout");

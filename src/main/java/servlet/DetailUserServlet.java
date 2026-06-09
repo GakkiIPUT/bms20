@@ -35,7 +35,7 @@ public class DetailUserServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 				return;
 			}
-			
+
 			if (!"2".equals(user.getAuthority())) {
 				request.setAttribute("error", "管理者権限がない為、ユーザー詳細画面が表示できませんでした。");
 				request.setAttribute("cmd", "menu");
@@ -66,6 +66,9 @@ public class DetailUserServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、画面表示は行えませんでした。";
 			path = "/view/error.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

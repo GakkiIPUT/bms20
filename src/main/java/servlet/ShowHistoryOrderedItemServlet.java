@@ -50,7 +50,10 @@ public class ShowHistoryOrderedItemServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、購入履歴画面が表示できませんでした。";
 			path = "/view/error.jsp";
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (error != null) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", "menu");

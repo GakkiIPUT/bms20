@@ -10,7 +10,7 @@
 	import="java.util.ArrayList,bean.Book, util.MyFormat"%>
 <%@page import="bean.User"%>
 <%
-// 仕様書通りのセッションチェック記述例
+// セッションチェック記述
 User user = (User) session.getAttribute("user");
 if (user == null) {
 	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
@@ -31,69 +31,94 @@ MyFormat format = new MyFormat();
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%>
+	<%@ include file="/common/header.jsp"%><main>
 
-	<div class="nav-header">
-		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+		<div class="nav-header">
+			<div class="nav-header-links">
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+					href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+			</div>
+			<div class="nav-header-title">
+				<h2 class="title">書籍一覧</h2>
+			</div>
 		</div>
-		<div class="nav-header-title">
-			<h2 class="title">書籍一覧</h2>
+
+		<hr align="center" size="2" color="black" width="100%">
+
+		<div class="form-layout">
+
+			<form action="<%=request.getContextPath()%>/search" method="get"
+				class="form-inline">
+				ISBN:<input type="text" name="isbn" class="input-text-border-gray">
+				TITLE:<input type="text" name="title" class="input-text-border-gray">
+				価格:<input type="text" name="price" class="input-text-border-gray">
+				<input type="submit" value="検索">
+			</form>
+
+			<form action="<%=request.getContextPath()%>/list" method="get"
+				class="form-inline">
+				<input type="submit" value="全件表示">
+			</form>
+
+			<form action="<%=request.getContextPath()%>/createPdf" method="get">
+				<input type="submit" value="PDF出力">
+			</form>
+
+			<form action="<%=request.getContextPath()%>/createExcel" method="get">
+				<input type="submit" value="Excelダウンロード">
+			</form>
+
 		</div>
-	</div>
-
-	<hr align="center" size="2" color="black" width="100%">
-
-	<div class="form-layout">
-
-		<form action="<%=request.getContextPath()%>/search" method="get"
-			class="form-inline">
-			ISBN:<input type="text" name="isbn" class="input-text-border-gray">
-			TITLE:<input type="text" name="title" class="input-text-border-gray">
-			価格:<input type="text" name="price" class="input-text-border-gray">
-			<input type="submit" value="検索">
-		</form>
-
-		<form action="<%=request.getContextPath()%>/list" method="get"
-			class="form-inline">
-			<input type="submit" value="全件表示">
-		</form>
-
-	</div>
-	<table align="center" class="form-table-80">
-		<tr>
-			<th class="header-color">ISBN</th>
-			<th class="header-color">TITLE</th>
-			<th class="header-color">価格</th>
-			<th class="header-color">変更/削除/カートに入れる</th>
-		</tr>
-		<%
-		if (list != null) {
-			for (Book b : list) {
-		%>
-		<tr>
-            <td><a
-                href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=detail"><%=b.getIsbn()%></a></td>
-            <td><%=b.getTitle()%></td>
-            <td><%=format.moneyFormat(b.getPrice())%></td>
-            <td>
-                <div class="action-cell" style="display:flex; align-items:center; gap:12px; flex-wrap:nowrap; white-space:nowrap;">
-                    <a href="<%=request.getContextPath()%>/detail?isbn=<%=b.getIsbn()%>&cmd=update">変更</a>
-                    <a href="<%=request.getContextPath()%>/delete?isbn=<%=b.getIsbn()%>">削除</a>
-                    <form action="<%=request.getContextPath()%>/insertIntoCart" method="get" style="display:flex; align-items:center; gap:6px; margin:0; padding:0;">
-                        <input type="hidden" name="isbn" value="<%=b.getIsbn()%>">
-                        <input type="text" name="quantity" size="3" value="1">
-                        <input type="submit" value="カートに入れる">
-                    </form>
-                </div>
-            </td>
-        </tr>
-		<%
-		}
-		}
-		%>
-	</table>
-	<%@ include file="/common/footer.jsp"%>
+		<table align="center" class="form-table-80">
+			<tr>
+				<th class="header-color">画像</th>
+				<th class="header-color">ISBN</th>
+				<th class="header-color">TITLE</th>
+				<th class="header-color">価格</th>
+				<th class="header-color">変更/削除/カートに入れる</th>
+			</tr>
+			<%
+			if (list != null) {
+				for (Book book : list) {
+					//画像名を取得
+					String imgName = book.getImage();
+					// もし画像名が null または空ならデフォルトに設定
+					if (imgName == null || imgName.isEmpty() || imgName.equals("null")) {
+				imgName = "no_image.jpg";
+					}
+			%>
+			<tr>
+				<td>
+					<%-- 画像を表示：imageフォルダ内のファイルを参照 --%> <img
+					src="<%=request.getContextPath()%>/image/<%=imgName%>" width="50"
+					height="50">
+				</td>
+				<td><a
+					href="<%=request.getContextPath()%>/detail?isbn=<%=book.getIsbn()%>&cmd=detail"><%=book.getIsbn()%></a></td>
+				<td><%=book.getTitle()%></td>
+				<td><%=format.moneyFormat(book.getPrice())%></td>
+				<td>
+					<div class="action-cell"
+						style="display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap;">
+						<a
+							href="<%=request.getContextPath()%>/detail?isbn=<%=book.getIsbn()%>&cmd=update">変更</a>
+						<a
+							href="<%=request.getContextPath()%>/delete?isbn=<%=book.getIsbn()%>">削除</a>
+						<form action="<%=request.getContextPath()%>/insertIntoCart"
+							method="get"
+							style="display: flex; align-items: center; gap: 6px; margin: 0; padding: 0;">
+							<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
+							<input type="text" name="quantity" size="3" value="1"> <input
+								type="submit" value="カートに入れる">
+						</form>
+					</div>
+				</td>
+			</tr>
+			<%
+			}
+			}
+			%>
+		</table>
+	</main><%@ include file="/common/footer.jsp"%>
 </body>
 </html>

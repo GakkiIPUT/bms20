@@ -52,7 +52,27 @@ public class ListServlet extends HttpServlet {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
 			cmd = "menu";
 			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		} finally {
+			if (error != null) {
+				request.setAttribute("error", error);
+				request.setAttribute("cmd", cmd);
+			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
-		request.getRequestDispatcher(path).forward(request, response);
+	}
+	/**
+	 * POSTリクエストをdoGetに委譲します。
+	 *
+	 * @param request HTTPリクエスト
+	 * @param response HTTPレスポンス
+	 * @throws ServletException サーブレット例外が発生した場合
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// POSTで送られてきても、上で書いたdoGetと同じ処理を実行させる
+		doGet(request, response);
 	}
 }

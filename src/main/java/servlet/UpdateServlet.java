@@ -8,13 +8,21 @@
 
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import bean.Book;
 import dao.BookDAO;
@@ -24,6 +32,7 @@ import dao.BookDAO;
  * 画面からの変更内容を受け取り、データベースを更新します。
  */
 @WebServlet("/update")
+@MultipartConfig
 public class UpdateServlet extends HttpServlet {
 
 	/**
@@ -34,7 +43,7 @@ public class UpdateServlet extends HttpServlet {
 	 * @throws ServletException サーブレット例外が発生した場合
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -42,6 +51,7 @@ public class UpdateServlet extends HttpServlet {
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String priceStr = request.getParameter("price");
+		String oldImage = request.getParameter("oldImage");
 
 		// 制御用の変数を初期化
 		String path = "/list";
@@ -67,10 +77,42 @@ public class UpdateServlet extends HttpServlet {
 				path = "/view/error.jsp";
 				return;
 			}
+
+			String imageName = "no_image.jpg"; // デフォルトの画像名
+			Part filePart = request.getPart("image"); // 画像のパラメータを受け取る
+
+			// 画像ファイルが選択されている場合のみ保存処理を行う
+			if (filePart != null && filePart.getSize() > 0) {
+				// 正規表現を使ってパラメータからファイル名を抽出
+				String contentDisposition = filePart.getHeader("content-disposition");
+				Pattern pattern = Pattern.compile("filename=\"(.*)\"");
+				Matcher matcher = pattern.matcher(contentDisposition);
+
+				if (matcher.find()) {
+					imageName = new File(matcher.group(1)).getName();
+				}
+
+				// 保存先のディレクトリを設定する
+				String saveDirectory = getServletContext().getRealPath("/image");
+				File dir = new File(saveDirectory);
+				if (!dir.exists()) {
+					dir.mkdirs(); // フォルダが無ければ作成
+				}
+
+				String filePath = saveDirectory + File.separator + imageName;
+
+				// InputStreamとFiles.copyを利用してサーバーに保存する
+				try (InputStream inputStream = filePart.getInputStream()) {
+					Files.copy(inputStream, new File(filePath).toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+
 			Book book = new Book();
 			book.setIsbn(isbn);
 			book.setTitle(title);
 			book.setPrice(price);
+			book.setImage(imageName);
 			bookDao.update(book);
 
 		} catch (NumberFormatException e) {
@@ -80,12 +122,17 @@ public class UpdateServlet extends HttpServlet {
 			error = "DB接続エラーの為、書籍更新処理は行えませんでした。";
 			path = "/view/error.jsp";
 			cmd = "menu";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", cmd);
+				request.getRequestDispatcher(path).forward(request, response);
 			}
-			request.getRequestDispatcher(path).forward(request, response);
+			// 一覧画面へリダイレクトする
+			response.sendRedirect(request.getContextPath() + path);
 		}
 	}
 }

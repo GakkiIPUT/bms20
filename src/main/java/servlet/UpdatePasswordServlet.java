@@ -53,7 +53,10 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、パスワード変更は行えません。";
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (!error.isEmpty()) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", "menu"); // エラー時はメニューに戻る

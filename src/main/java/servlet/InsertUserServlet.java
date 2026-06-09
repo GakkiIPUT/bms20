@@ -88,6 +88,9 @@ public class InsertUserServlet extends HttpServlet {
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、ユーザー登録処理は行えませんでした。";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			// 例外が発生してもしなくても、最後に1回だけまとめてフォワード処理を行う
 			if (error != null) {

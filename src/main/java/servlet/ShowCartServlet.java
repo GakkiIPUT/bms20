@@ -87,12 +87,15 @@ public class ShowCartServlet extends HttpServlet {
 			// リクエストスコープに "book_list" という名前で格納する。
 			request.setAttribute("book_list", saleList);
 
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 			path = "/view/error.jsp";
 			error = "DB接続エラーの為、カート状況は確認出来ません。";
 			cmd = "logout";
 			return;
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (error != null) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", cmd);

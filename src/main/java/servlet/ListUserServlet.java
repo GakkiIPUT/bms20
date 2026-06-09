@@ -73,6 +73,9 @@ public class ListUserServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、ユーザー一覧表示は行えませんでした。";
 			path = "/view/error.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

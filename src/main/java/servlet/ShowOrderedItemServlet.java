@@ -44,12 +44,15 @@ public class ShowOrderedItemServlet extends HttpServlet {
 			// 取得したListをリクエストスコープに"ordered_list"という名前で格納する。
 			request.setAttribute("ordered_list", list);
 
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 			path = "/view/error.jsp";
 			error = "DB接続エラーの為、購入状況確認は出来ません。";
 			cmd = "logout";
 			return;
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (error != null) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", cmd);

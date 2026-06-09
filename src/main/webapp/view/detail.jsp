@@ -9,33 +9,39 @@
 	import="bean.Book, util.MyFormat"%>
 <%@page import="bean.User"%>
 <%
-
-    User user = (User)session.getAttribute("user");
-    if(user == null){
-        request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
-        request.setAttribute("cmd","logout");
-        request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-        return;
-    }
+User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
 %>
 <%
 Book book = (Book) request.getAttribute("book");
 MyFormat format = new MyFormat();
+//画像名を取得
+String imgName = book.getImage();
+// もし画像名が null または空ならデフォルトに設定
+if (imgName == null || imgName.isEmpty() || imgName.equals("null")) {
+imgName = "no_image.jpg";
+}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>書籍詳細情報</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%>
+	<%@ include file="/common/header.jsp"%><main>
 
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp" >[メニュー]</a>
-			<a href="<%=request.getContextPath()%>/view/insert.jsp" >[書籍登録]</a>
-			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+				href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a> <a
+				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
 		<div class="nav-header-title">
 			<h2 class="title">書籍詳細情報</h2>
@@ -52,8 +58,7 @@ MyFormat format = new MyFormat();
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
 					<input type="hidden" name="cmd" value="update"> <input
 						type="submit" value="変更">
-				</form>
-				<a>&emsp;&emsp;</a>
+				</form> <a>&emsp;&emsp;</a>
 				<form action="<%=request.getContextPath()%>/delete" method="get"
 					class="form-inline">
 					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
@@ -80,7 +85,10 @@ MyFormat format = new MyFormat();
 		</tr>
 
 	</table>
-
-	<%@ include file="/common/footer.jsp"%>
+	<div style="text-align: center; margin: 20px;">
+		<img src="<%=request.getContextPath()%>/image/<%=imgName%>"
+			width="200" height="200">
+	</div>
+	</main><%@ include file="/common/footer.jsp"%>
 </body>
 </html>

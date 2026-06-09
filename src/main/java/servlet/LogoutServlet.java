@@ -46,8 +46,9 @@ public class LogoutServlet extends HttpServlet {
 
         } catch (Exception e) {
             error = "ログアウト処理中に予期せぬエラーが発生しました。";
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
             path = "/view/error.jsp";
-        } finally {
+        }finally {
             if (error != null) {
                 request.setAttribute("error", error);
                 request.setAttribute("cmd", "login");

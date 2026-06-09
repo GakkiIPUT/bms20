@@ -64,7 +64,7 @@ public class ChangePasswordServlet extends HttpServlet {
 				// ④UserDAOでパスワード変更処理を呼び出し（メソッド名を updateForPassword に変更）
 				UserDAO userDao = new UserDAO();
 				userDao.updateForPassword(user.getUserid(), newPassword);
-                
+
 				// ⑤新パスワードをセッションのuserに設定し、再格納
 				user.setPassword(newPassword);
 				session.setAttribute("user", user);
@@ -73,6 +73,9 @@ public class ChangePasswordServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、パスワード変更処理は行えませんでした。";
 			path = "/view/error.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

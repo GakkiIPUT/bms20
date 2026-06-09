@@ -9,14 +9,13 @@
 	import="bean.Book, util.MyFormat"%>
 <%@page import="bean.User"%>
 <%
-
-    User user = (User)session.getAttribute("user");
-    if(user == null){
-        request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
-        request.setAttribute("cmd","logout");
-        request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-        return;
-    }
+User user = (User) session.getAttribute("user");
+if (user == null) {
+	request.setAttribute("error", "セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("cmd", "logout");
+	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+	return;
+}
 %>
 <%
 Book book = (Book) request.getAttribute("book");
@@ -27,16 +26,17 @@ MyFormat format = new MyFormat();
 <html>
 <head>
 <title>書籍変更</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%>
+	<%@ include file="/common/header.jsp"%><main>
 
 	<div class="nav-header">
 		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
-			<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
-			<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+				href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a> <a
+				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
 		</div>
 		<div class="nav-header-title">
 			<h2 class="title">書籍変更</h2>
@@ -45,15 +45,17 @@ MyFormat format = new MyFormat();
 
 	<hr align="center" size="2" color="black" width="100%">
 
-	<form action="<%=request.getContextPath()%>/update" method="get">
+	<form action="<%=request.getContextPath()%>/update" method="post"
+		enctype="multipart/form-data">
 		<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
 		<br>
 		<table align="center">
 			<tr>
 				<th class="table-header-width-10"></th>
-				<th class="table-header-width-30"><p>&lt;&lt;変更前情報&gt;&gt;</p></th>
+				<th class="table-header-width-40"><p>&lt;&lt;変更前情報&gt;&gt;</p></th>
 				<th class="table-header-width-5"></th>
-				<th class="table-header-width-30"><p>&lt;&lt;変更後情報&gt;&gt;<p></th>
+				<th class="table-header-width-40"><p>&lt;&lt;変更後情報&gt;&gt;
+					</p></th>
 			</tr>
 			<tr>
 				<td class="header-color">ISBN</td>
@@ -73,10 +75,14 @@ MyFormat format = new MyFormat();
 				<td></td>
 				<td align="center"><input type="text" name="price" value=""></td>
 			<tr>
-				<td><br></td>
-			</tr>
-			<tr>
-				<td><br></td>
+				<td class="header-color">画像</td>
+				<td align="center" class="form-row-info"><img
+					src="<%=request.getContextPath()%>/image/<%=book.getImage()%>"
+					width="150" height="150"></td>
+				<td></td>
+				<td align="center"><input type="file" name="image"
+					value="<%=book.getImage()%>"><input type="hidden"
+					name="oldImage" value="<%=book.getImage()%>"></td>
 			</tr>
 			<tr>
 				<td><br></td>
@@ -87,6 +93,6 @@ MyFormat format = new MyFormat();
 			</tr>
 		</table>
 	</form>
-	<%@ include file="/common/footer.jsp"%>
+	</main><%@ include file="/common/footer.jsp"%>
 </body>
 </html>

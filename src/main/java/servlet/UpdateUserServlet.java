@@ -35,7 +35,7 @@ public class UpdateUserServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String error = "";
-		
+
 		try {
 			String userid = request.getParameter("user");
 			String password = request.getParameter("password");
@@ -68,6 +68,9 @@ public class UpdateUserServlet extends HttpServlet {
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、ユーザー変更は行えません。";
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (!error.isEmpty()) {
 				request.setAttribute("error", error);

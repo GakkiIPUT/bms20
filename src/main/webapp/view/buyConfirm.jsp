@@ -31,54 +31,55 @@ int total = 0;
 </head>
 <body>
 	<%@ include file="/common/header.jsp"%>
-
-	<div class="nav-header">
-		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+	<main>
+		<div class="nav-header">
+			<div class="nav-header-links">
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+					href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+			</div>
+			<h2 class="title">購入品確認</h2>
 		</div>
-		<h2 class="title">購入品確認</h2>
-	</div>
-	<hr align="center" size="2" color="black" width="100%">
+		<hr align="center" size="2" color="black" width="100%">
 
-	<p align="center">
-		下記の商品を購入しました。<br>ご利用ありがとうございました。
-	</p>
+		<p align="center">
+			下記の商品を購入しました。<br>ご利用ありがとうございました。
+		</p>
 
-	<table align="center" border="1" class="form-table">
-		<tr class="header-color">
-			<th>ISBN</th>
-			<th>TITLE</th>
-			<th>価格</th>
-			<th>購入数</th>
-		</tr>
-		<%
-		if (list != null) {
-			for (Sale s : list) {
-				total += s.getPrice() * s.getQuantity();
-		%>
-		<tr>
-			<td align="center"><%=s.getIsbn()%></td>
-			<td><%=s.getTitle()%></td>
-			<td align="right"><%=mf.moneyFormat(s.getPrice())%></td>
-			<td align="center"><%=s.getQuantity()%></td>
-		</tr>
-		<%
+		<table align="center" border="1" class="form-table">
+			<tr class="header-color">
+				<th>ISBN</th>
+				<th>TITLE</th>
+				<th>価格</th>
+				<th>購入数</th>
+			</tr>
+			<%
+			if (list != null) {
+				for (Sale s : list) {
+					total += s.getPrice() * s.getQuantity();
+			%>
+			<tr>
+				<td align="center"><%=s.getIsbn()%></td>
+				<td><%=s.getTitle()%></td>
+				<td align="right"><%=mf.moneyFormat(s.getPrice())%></td>
+				<td align="center"><%=s.getQuantity()%></td>
+			</tr>
+			<%
 			}
-		}
-		%>
-	</table>
+			}
+			%>
+		</table>
 
-	<hr
-		style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
-	<table align="center" style="width: 50%;">
-		<tr>
-			<td></td>
-			<td align="right" class="header-color">合計</td>
-			<td align="left"><%=mf.moneyFormat(total)%></td>
-		</tr>
-	</table>
+		<hr
+			style="border: 0; border-top: 5px double #333333; width: 90%; margin: 15px auto;">
+		<table align="center" style="width: 50%;">
+			<tr>
+				<td></td>
+				<td align="right" class="header-color">合計</td>
+				<td align="left"><%=mf.moneyFormat(total)%></td>
+			</tr>
+		</table>
 
+	</main>
 	<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

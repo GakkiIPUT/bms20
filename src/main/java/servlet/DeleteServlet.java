@@ -54,6 +54,9 @@ public class DeleteServlet extends HttpServlet {
 			error = "DB接続エラーの為、書籍削除処理は行えませんでした。";
 			cmd = "menu";
 			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);

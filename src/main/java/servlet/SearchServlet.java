@@ -47,7 +47,10 @@ public class SearchServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
 			path = "/view/error.jsp";
-		} finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
+		}  finally {
 			if (error != null) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", cmd);

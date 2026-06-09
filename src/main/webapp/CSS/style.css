@@ -22,10 +22,14 @@ body {
 	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
 	background-color: #FFFFFF;
 	color: #000000;
-	margin: 0;
-	padding: 0;
+	display: flex;
+	flex-flow: column;
+	min-height: 100vh;
 }
-
+/* メイン部分の設定 */
+main{
+	flex: 1;
+}
 /* 共通リンクのスタイル */
 a {
 	color: var(--link);
@@ -54,7 +58,7 @@ header hr {
 /* 共通フッター（footer.jsp用）の位置固定 */
 footer {
 	position: sticky;
-	bottom: 60px;
+	height: 100px;
 	width: 100%;
 	background-color: #FFFFFF;
 }
@@ -69,7 +73,7 @@ footer hr {
 footer p {
 	margin-left: 20px;
 	font-size: 18px;
-	color: #000000;
+	color: var(--head_foot);
 }
 
 /*タイトル用 */
@@ -257,10 +261,11 @@ button:hover {
 	width: 10%;
 }
 
-.table-header-width-30 {
-	width: 30%;
+.table-header-width-40 {
+	width: 40%;
 }
-.table-header-width-30 p{
+
+.table-header-width-40 p {
 	color: var(--title);
 }
 

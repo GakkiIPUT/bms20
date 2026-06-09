@@ -72,12 +72,15 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("message", "入力データが間違っています！");
 			path = "/view/login.jsp";
 
-		} catch (IllegalStateException e) {
-			// DB接続エラーなどの場合
-			path = "/view/error.jsp";
-			error = "DB接続エラーの為、ログインは出来ません。 ";
-			cmd = "logout";
-			return;
+//		} catch (IllegalStateException e) {
+//			// DB接続エラーなどの場合
+//			path = "/view/error.jsp";
+//			error = "DB接続エラーの為、ログインは出来ません。 ";
+//			cmd = "logout";
+//			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = "予期せぬエラーが発生しました。" + e.getMessage();
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);
