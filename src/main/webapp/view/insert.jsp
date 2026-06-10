@@ -24,46 +24,46 @@ if (user == null) {
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%><main>
-
-	<div class="nav-header">
-		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+	<%@ include file="/common/header.jsp"%>
+	<main>
+		<div class="nav-header">
+			<div class="nav-header-links">
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
+					href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+			</div>
+			<div class="nav-header-title">
+				<h2 class="title">書籍登録</h2>
+			</div>
 		</div>
-		<div class="nav-header-title">
-			<h2 class="title">書籍登録</h2>
-		</div>
-	</div>
 
-	<hr align="center" size="2" color="black" width="100%">
-	<form action="<%=request.getContextPath()%>/insert" method="post"
-		enctype="multipart/form-data">
-		<table align="center" class="form-table">
-			<tr>
-				<td class="header-color">ISBN</td>
-				<td><input type="text" name="isbn" class="form-input-full"></td>
-			</tr>
-			<tr>
-				<td class="header-color">TITLE</td>
-				<td><input type="text" name="title" class="form-input-full"></td>
-			</tr>
-			<tr>
-				<td class="header-color">価格</td>
-				<td><input type="text" name="price" class="form-input-full"></td>
-			</tr>
-			<tr>
-				<td class="header-color">画像</td>
-				<td><input type="file" name="image" class="form-input-full"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center" class="form-padding-top"><input
-					type="submit" value="登録"></td>
+		<hr class="head_foot_hr">
+		<form action="<%=request.getContextPath()%>/insert" method="post"
+			enctype="multipart/form-data">
+			<table align="center" class="form-table">
+				<tr>
+					<td class="header-color">ISBN</td>
+					<td><input type="text" name="isbn" class="form-input-full"></td>
+				</tr>
+				<tr>
+					<td class="header-color">TITLE</td>
+					<td><input type="text" name="title" class="form-input-full"></td>
+				</tr>
+				<tr>
+					<td class="header-color">価格</td>
+					<td><input type="text" name="price" class="form-input-full"></td>
+				</tr>
+				<tr>
+					<td class="header-color">画像</td>
+					<td><input type="file" name="image" class="form-input-full"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center" class="form-padding-top"><input
+						type="submit" value="登録"></td>
 
-			</tr>
-		</table>
-	</form>
-
-	</main><%@ include file="/common/footer.jsp"%>
+				</tr>
+			</table>
+		</form>
+	</main>
+	<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

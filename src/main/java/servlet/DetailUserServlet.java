@@ -57,7 +57,7 @@ public class DetailUserServlet extends HttpServlet {
 				}
 				path = "/view/error.jsp";
 			} else {
-				request.setAttribute("user_detail", resultUser);
+				request.setAttribute("user", resultUser);
 				if ("updateUser".equals(cmdParam)) {
 					path = "/view/updateUser.jsp";
 				}

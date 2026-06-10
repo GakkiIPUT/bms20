@@ -33,7 +33,7 @@
 	<%@ include file="/common/header.jsp"%><main>
 
 	<h2 align="center">ログイン</h2>
-	<hr align="center" size="2" color="black" width="100%">
+	<hr class="head_foot_hr">
 	<p align="center" class="error-title"><%= message %></p>
 
 	<form action="<%= request.getContextPath() %>/login" method="post">

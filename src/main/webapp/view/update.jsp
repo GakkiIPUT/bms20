@@ -43,7 +43,7 @@ MyFormat format = new MyFormat();
 		</div>
 	</div>
 
-	<hr align="center" size="2" color="black" width="100%">
+	<hr class="head_foot_hr">
 
 	<form action="<%=request.getContextPath()%>/update" method="post"
 		enctype="multipart/form-data">

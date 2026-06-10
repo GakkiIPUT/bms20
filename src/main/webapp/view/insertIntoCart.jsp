@@ -34,7 +34,8 @@ MyFormat mf = new MyFormat();
 <title>カート追加</title>
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%><main>
+	<%@ include file="/common/header.jsp"%>
+	<main>
 	<div class="nav-header">
 		<div class="nav-header-links">
 			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
@@ -42,7 +43,7 @@ MyFormat mf = new MyFormat();
 		</div>
 		<h2 class="title">カート追加</h2>
 	</div>
-	<hr align="center" size="2" color="black" width="100%">
+	<hr class="head_foot_hr">
 
 	<p align="center">下記の書籍をカートに追加しました。</p>
 
@@ -70,7 +71,7 @@ MyFormat mf = new MyFormat();
 			<input type="submit" value="カート確認">
 		</div>
 	</form>
-
-	</main><%@ include file="/common/footer.jsp"%>
+	</main>
+	<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

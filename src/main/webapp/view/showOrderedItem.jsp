@@ -37,7 +37,7 @@ boolean isAdmin = (user != null && "2".equals(user.getAuthority()));
 		</div>
 		<h2 class="title">購入状況</h2>
 	</div>
-	<hr align="center" size="2" color="black" width="100%">
+	<hr class="head_foot_hr">
 
 	<table align="center" class="form-table-60">
 		<tr>

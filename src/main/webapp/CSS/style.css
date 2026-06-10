@@ -26,10 +26,12 @@ body {
 	flex-flow: column;
 	min-height: 100vh;
 }
+
 /* メイン部分の設定 */
-main{
+main {
 	flex: 1;
 }
+
 /* 共通リンクのスタイル */
 a {
 	color: var(--link);
@@ -74,6 +76,14 @@ footer p {
 	margin-left: 20px;
 	font-size: 18px;
 	color: var(--head_foot);
+}
+
+/* 色付け用 */
+.head_foot_hr {
+	height: 2px;
+	background-color: var(--head_foot);
+	width: 100%;
+	border: none;
 }
 
 /*タイトル用 */
@@ -146,7 +156,7 @@ table td {
 	text-align: center;
 }
 
-/* 画面設計書指定：一覧画面の検索窓等のグレー枠線 */
+/* 一覧画面の検索窓等のグレー枠線 */
 input[type="text"].border-gray,
 input[type="password"].border-gray {
 	border: 1px solid #8E8E8E;

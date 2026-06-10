@@ -35,15 +35,26 @@ MyFormat format = new MyFormat();
 
 		<div class="nav-header">
 			<div class="nav-header-links">
-				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-					href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
+				<%
+				if ("1".equals(user.getAuthority())) {
+				%>
+				<a href="<%=request.getContextPath()%>/showCart">[カート状況]</a>
+				<%
+				}
+				if ("2".equals(user.getAuthority())) {
+				%>
+				<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+				<%
+				}
+				%>
 			</div>
 			<div class="nav-header-title">
 				<h2 class="title">書籍一覧</h2>
 			</div>
 		</div>
 
-		<hr align="center" size="2" color="black" width="100%">
+		<hr class="head_foot_hr">
 
 		<div class="form-layout">
 
@@ -71,11 +82,18 @@ MyFormat format = new MyFormat();
 		</div>
 		<table align="center" class="form-table-80">
 			<tr>
-				<th class="header-color">画像</th>
+				<th class="header-color">イメージ</th>
 				<th class="header-color">ISBN</th>
 				<th class="header-color">TITLE</th>
 				<th class="header-color">価格</th>
-				<th class="header-color">変更/削除/カートに入れる</th>
+				<%
+				if ("1".equals(user.getAuthority())) {
+				%>
+				<th class="header-color">購入数</th>
+				<%
+				}
+				%>
+				<th class="header-color"></th>
 			</tr>
 			<%
 			if (list != null) {
@@ -97,22 +115,32 @@ MyFormat format = new MyFormat();
 					href="<%=request.getContextPath()%>/detail?isbn=<%=book.getIsbn()%>&cmd=detail"><%=book.getIsbn()%></a></td>
 				<td><%=book.getTitle()%></td>
 				<td><%=format.moneyFormat(book.getPrice())%></td>
-				<td>
-					<div class="action-cell"
-						style="display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap;">
-						<a
-							href="<%=request.getContextPath()%>/detail?isbn=<%=book.getIsbn()%>&cmd=update">変更</a>
-						<a
-							href="<%=request.getContextPath()%>/delete?isbn=<%=book.getIsbn()%>">削除</a>
-						<form action="<%=request.getContextPath()%>/insertIntoCart"
-							method="get"
-							style="display: flex; align-items: center; gap: 6px; margin: 0; padding: 0;">
-							<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
-							<input type="text" name="quantity" size="3" value="1"> <input
-								type="submit" value="カートに入れる">
-						</form>
-					</div>
+
+				<%
+				if ("1".equals(user.getAuthority())) {
+				%><td><input type="text" name="quantity" size="3" value="1"
+					form="cartform<%=book.getIsbn()%>" style="text-align: center;">
 				</td>
+				<td>
+					<form id="cartform<%=book.getIsbn()%>"
+						action="<%=request.getContextPath()%>/insertIntoCart" method="get"
+						style="margin: 0;">
+						<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
+						<input type="submit" value="カートに入れる">
+					</form>
+				</td>
+				<%
+				}
+				if ("2".equals(user.getAuthority())) {
+				%><td><a
+					href="<%=request.getContextPath()%>/detail?isbn=<%=book.getIsbn()%>&cmd=update">変更</a>
+					<a
+					href="<%=request.getContextPath()%>/delete?isbn=<%=book.getIsbn()%>">削除</a>
+				</td>
+				<%
+				}
+				%>
+
 			</tr>
 			<%
 			}

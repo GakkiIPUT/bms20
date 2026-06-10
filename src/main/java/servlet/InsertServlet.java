@@ -99,7 +99,7 @@ public class InsertServlet extends HttpServlet {
 
 				// 保存先のディレクトリを設定する
 				String saveDirectory = getServletContext().getRealPath("/image");
-				System.out.println("DEBUG: 保存先パスはここです -> " + saveDirectory); 
+				
 				File dir = new File(saveDirectory);
 				if (!dir.exists()) {
 					dir.mkdirs(); // フォルダが無ければ作成

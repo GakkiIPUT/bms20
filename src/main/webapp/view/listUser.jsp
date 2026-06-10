@@ -37,7 +37,7 @@ ArrayList<User> userList = (ArrayList<User>) request.getAttribute("user_list");
 		</div>
 	</div>
 
-	<hr align="center" size="2" color="black" width="100%">
+	<hr class="head_foot_hr">
 
 	<form action="<%=request.getContextPath()%>/listUser" method="get" class="form-inline">
 		<table align="center" style="margin-top: 15px;">

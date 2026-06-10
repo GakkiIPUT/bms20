@@ -39,7 +39,7 @@ int total = 0;
 			</div>
 			<h2 class="title">購入品確認</h2>
 		</div>
-		<hr align="center" size="2" color="black" width="100%">
+		<hr class="head_foot_hr">
 
 		<p align="center">
 			下記の商品を購入しました。<br>ご利用ありがとうございました。

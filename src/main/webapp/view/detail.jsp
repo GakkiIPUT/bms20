@@ -24,7 +24,7 @@ MyFormat format = new MyFormat();
 String imgName = book.getImage();
 // もし画像名が null または空ならデフォルトに設定
 if (imgName == null || imgName.isEmpty() || imgName.equals("null")) {
-imgName = "no_image.jpg";
+	imgName = "no_image.jpg";
 }
 %>
 <!DOCTYPE html>
@@ -35,60 +35,72 @@ imgName = "no_image.jpg";
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-	<%@ include file="/common/header.jsp"%><main>
+	<%@ include file="/common/header.jsp"%>
+	<main>
 
-	<div class="nav-header">
-		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> <a
-				href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a> <a
-				href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+		<div class="nav-header">
+			<div class="nav-header-links">
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
+				<%
+				if ("2".equals(user.getAuthority())) {
+				%>
+				<a href="<%=request.getContextPath()%>/view/insert.jsp">[書籍登録]</a>
+				<%
+				}
+				%>
+				<a href="<%=request.getContextPath()%>/list">[書籍一覧]</a>
+			</div>
+			<div class="nav-header-title">
+				<h2 class="title">書籍詳細情報</h2>
+			</div>
 		</div>
-		<div class="nav-header-title">
-			<h2 class="title">書籍詳細情報</h2>
+		<hr class="head_foot_hr">
+		<br>
+
+		<table align="center" class="form-table-30">
+			<tr>
+				<td colspan="2" align="center">
+					<%
+					if ("2".equals(user.getAuthority())) {
+					%>
+					<form action="<%=request.getContextPath()%>/detail" method="get"
+						class="form-inline">
+						<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
+						<input type="hidden" name="cmd" value="update"> <input
+							type="submit" value="変更">
+					</form> <a>&emsp;&emsp;</a>
+					<form action="<%=request.getContextPath()%>/delete" method="get"
+						class="form-inline">
+						<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
+						<input type="submit" value="削除">
+					</form> <%
+ }
+ %>
+				</td>
+			</tr>
+			<tr>
+				<td><br></td>
+				<td><br></td>
+
+			</tr>
+			<tr>
+				<td class="header-color">ISBN</td>
+				<td class="column-color"><%=book.getIsbn()%></td>
+			</tr>
+			<tr>
+				<td class="header-color">TITLE</td>
+				<td class="column-color"><%=book.getTitle()%></td>
+			</tr>
+			<tr>
+				<td class="header-color">価格</td>
+				<td class="column-color"><%=format.moneyFormat(book.getPrice())%></td>
+			</tr>
+
+		</table>
+		<div style="text-align: center; margin: 20px;">
+			<img src="<%=request.getContextPath()%>/image/<%=imgName%>"
+				width="200" height="200">
 		</div>
-	</div>
-	<hr align="center" size="2" color="black" width="100%">
-	<br>
-
-	<table align="center" class="form-table-30">
-		<tr>
-			<td colspan="2" align="center">
-				<form action="<%=request.getContextPath()%>/detail" method="get"
-					class="form-inline">
-					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
-					<input type="hidden" name="cmd" value="update"> <input
-						type="submit" value="変更">
-				</form> <a>&emsp;&emsp;</a>
-				<form action="<%=request.getContextPath()%>/delete" method="get"
-					class="form-inline">
-					<input type="hidden" name="isbn" value="<%=book.getIsbn()%>">
-					<input type="submit" value="削除">
-				</form>
-			</td>
-		</tr>
-		<tr>
-			<td><br></td>
-			<td><br></td>
-
-		</tr>
-		<tr>
-			<td class="header-color">ISBN</td>
-			<td class="column-color"><%=book.getIsbn()%></td>
-		</tr>
-		<tr>
-			<td class="header-color">TITLE</td>
-			<td class="column-color"><%=book.getTitle()%></td>
-		</tr>
-		<tr>
-			<td class="header-color">価格</td>
-			<td class="column-color"><%=format.moneyFormat(book.getPrice())%></td>
-		</tr>
-
-	</table>
-	<div style="text-align: center; margin: 20px;">
-		<img src="<%=request.getContextPath()%>/image/<%=imgName%>"
-			width="200" height="200">
-	</div>
 	</main><%@ include file="/common/footer.jsp"%>
 </body>
 </html>

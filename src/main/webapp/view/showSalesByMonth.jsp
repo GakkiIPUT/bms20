@@ -33,85 +33,95 @@ int total = 0; // 総合計計算用
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
 <body>
-<%@ include file="/common/header.jsp"%><main>
+	<%@ include file="/common/header.jsp"%><main>
 
-	<div class="nav-header">
-		<div class="nav-header-links">
-			<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a> 
+		<div class="nav-header">
+			<div class="nav-header-links">
+				<a href="<%=request.getContextPath()%>/view/menu.jsp">[メニュー]</a>
+			</div>
+			<div class="nav-header-title">
+				<h2 class="title">売上げ状況</h2>
+			</div>
 		</div>
-		<div class="nav-header-title">
-			<h2 class="title">売上げ状況</h2>
-		</div>
-	</div>
-	
-	<hr align="center" size="2" color="black" width="100%">
 
-	<table align="center">
-		<tr>
-			<td>
-				<%--@ include file="/common/userInfo.jsp" --%>
-			</td>
-		</tr>
-	</table>
+		<hr class="head_foot_hr">
 
-	<form action="<%=request.getContextPath()%>/showSalesByMonth"
-		method="get">
-		<table align="center" style="margin-top: 15px;">
+		<table align="center">
 			<tr>
-				<td><input type="text" name="year"
-					value="<%=year != null ? year : ""%>" size="5">年</td>
-				<td><input type="text" name="month"
-					value="<%=month != null ? month : ""%>" size="5">月</td>
-				<td><input type="submit" value="検索"></td>
+				<td>
+					<%--@ include file="/common/userInfo.jsp" --%>
+				</td>
 			</tr>
 		</table>
-	</form>
 
-	<%
-	if (list != null) {
-	%>
-	<table align="center" width="800" style="margin-top: 20px;">
-		<tr>
-			<td align="center"><h3><%=year%>年<%=month%>月売上げ状況
-				</h3></td>
-		</tr>
-	</table>
+		<form action="<%=request.getContextPath()%>/showSalesByMonth"
+			method="get">
+			<table align="center" style="margin-top: 15px;">
+				<tr>
+					<td><input type="text" name="year"
+						value="<%=year != null ? year : ""%>" size="5">年</td>
+					<td><input type="text" name="month"
+						value="<%=month != null ? month : ""%>" size="5">月</td>
+					<td><input type="submit" value="検索"></td>
+				</tr>
+			</table>
+		</form>
 
-	<table align="center" width="700">
-		<tr>
-			<td class="header-blue" align="center" width="100">ISBN</td>
-			<td class="header-blue" align="center" width="250">Title</td>
-			<td class="header-blue" align="center" width="100">価格</td>
-			<td class="header-blue" align="center" width="100">数量</td>
-			<td class="header-blue" align="center" width="150">売上げ小計</td>
-		</tr>
 		<%
-		// 拡張for文でリストを回し、同時に合計金額を加算する
-		for (Sale sale : list) {
-			total += sale.getAmount();
+		if (list != null) {
 		%>
-		<tr>
-			<td align="center"><%=sale.getIsbn()%></td>
-			<td align="center"><%=sale.getTitle()%></td>
-			<td align="right"><%=mf.moneyFormat(sale.getPrice())%></td>
-			<td align="center"><%=sale.getQuantity()%></td>
-			<td align="right"><%=mf.moneyFormat(sale.getAmount())%></td>
-		</tr>
+		<table align="center" width="800" style="margin-top: 20px;">
+			<tr>
+				<td align="center"><h3><%=year%>年<%=month%>月売上げ状況
+					</h3></td>
+			</tr>
+		</table>
+
+		<table align="center" width="700">
+			<tr>
+				<td class="header-blue" align="center" width="100">ISBN</td>
+				<td class="header-blue" align="center" width="250">Title</td>
+				<td class="header-blue" align="center" width="100">価格</td>
+				<td class="header-blue" align="center" width="100">数量</td>
+				<td class="header-blue" align="center" width="150">売上げ小計</td>
+			</tr>
+			<%
+			// 拡張for文でリストを回し、同時に合計金額を加算する
+			for (Sale sale : list) {
+				total += sale.getAmount();
+			%>
+			<tr>
+				<td align="center"><%=sale.getIsbn()%></td>
+				<td align="center"><%=sale.getTitle()%></td>
+				<td align="right"><%=mf.moneyFormat(sale.getPrice())%></td>
+				<td align="center"><%=sale.getQuantity()%></td>
+				<td align="right"><%=mf.moneyFormat(sale.getAmount())%></td>
+			</tr>
+			<%
+			}
+			%>
+		</table>
+
+		<table align="center" width="700" style="margin-top: 10px;">
+			<tr>
+				<td align="right" width="500"><strong>合計</strong></td>
+				<td align="right" width="200"><strong><%=mf.moneyFormat(total)%></strong></td>
+			</tr>
+		</table>
+		<%
+		}
+		if (list != null && list.size() > 0) {
+		%>
+		<div style="text-align: center; margin-top: 20px;">
+			<form action="<%=request.getContextPath()%>/graph" method="get">
+				<input type="hidden" name="dispDate"
+					value="<%=year%>年<%=month%>月"> <input type="submit"
+					value="グラフを表示">
+			</form>
+		</div>
 		<%
 		}
 		%>
-	</table>
-
-	<table align="center" width="700" style="margin-top: 10px;">
-		<tr>
-			<td align="right" width="500"><strong>合計</strong></td>
-			<td align="right" width="200"><strong><%=mf.moneyFormat(total)%></strong></td>
-		</tr>
-	</table>
-	<%
-	}
-	%>
-
 	</main><%@ include file="/common/footer.jsp"%>
 </body>
 </html>
